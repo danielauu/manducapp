@@ -19,7 +19,7 @@ El plan completo está en [docs/plan-v1.md](docs/plan-v1.md) y el avance, en los
 | 2. MVP para una persona | Hecha: evangelio de hoy, del domingo o texto propio, recorte por tiempo, voz, repeticiones, uniones, recitado final y reflexión |
 | 3. Modo grupo (1 a 5 personas) | Hecha |
 | 4. Diario de meditaciones, los 6 idiomas de la interfaz y elección de voz | Hecha. Las traducciones al francés, italiano, alemán y polaco esperan la revisión de hablantes nativos |
-| 5. PWA endurecida y piloto | Pendiente |
+| 5. PWA endurecida y piloto | Hecha la parte técnica: ritmo ajustable, modo sin conexión, aviso de instalación y accesibilidad (Lighthouse móvil: rendimiento 98, accesibilidad 100, buenas prácticas 100, SEO 100). Falta el piloto con un grupo real, que describe [docs/piloto.md](docs/piloto.md) |
 | 6. Tiendas | Pendiente |
 
 ## Principio rector
