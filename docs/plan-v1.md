@@ -71,7 +71,7 @@ cliente (PWA)  --GET /v1/gospel?date=2026-10-11&lang=es-->  Worker  --> Evangeli
      \--(si el Worker no responde)--> Evangelizo directo, con el mismo parser de packages/core
 ```
 
-- **Contrato de la API**: `GET /v1/gospel?date=YYYY-MM-DD&lang=es|en|fr|it|de|pl` devuelve `{date, lang, liturgicalTitle, reference, lines[], shortLines?, credit, source}`.
+- **Contrato de la API**: `GET /v1/gospel?date=YYYY-MM-DD&lang=es|en|fr|it|de|pl` devuelve `{date, lang, liturgicalTitle, reference, lines[], shortLines?, shortReference?, credit, source}`.
 - **Puertos intercambiables (`GospelProvider`, `TtsPort`)** aíslan los dos riesgos externos: que el feed cambie y que el TTS del navegador se porte mal en iOS.
 - **Atribución obligatoria** en pantalla con la línea de crédito de la respuesta.
 - **Fallback**: caché local, luego Evangelizo directo, luego AELF (solo francés), luego "pegar texto".
