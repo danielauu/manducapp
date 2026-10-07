@@ -16,6 +16,9 @@ export async function getText(fetchFn: FetchLike, url: string): Promise<string> 
   } catch (cause) {
     throw new FeedError('network', `No se pudo conectar con ${url}`, { cause });
   }
+  if (response.status === 429) {
+    throw new FeedError('rate-limited', `La fuente limitó las peticiones (HTTP 429) en ${url}`);
+  }
   if (!response.ok) {
     throw new FeedError('bad-response', `HTTP ${response.status} desde ${url}`);
   }
