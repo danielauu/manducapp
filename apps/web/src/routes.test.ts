@@ -8,12 +8,13 @@ describe('rutas', () => {
     expect(parseRoute('#/preview')).toBe('preview');
     expect(parseRoute('#own')).toBe('own');
     expect(parseRoute('#/session')).toBe('session');
+    expect(parseRoute('#/journal')).toBe('journal');
     expect(parseRoute('#/spike?x=1')).toBe('spike');
     expect(parseRoute('#/inexistente')).toBe('home');
   });
 
   it('routeHash y parseRoute son inversas', () => {
-    for (const route of ['home', 'preview', 'session', 'own', 'spike'] as const) {
+    for (const route of ['home', 'preview', 'session', 'journal', 'own', 'spike'] as const) {
       expect(parseRoute(routeHash(route))).toBe(route);
     }
   });

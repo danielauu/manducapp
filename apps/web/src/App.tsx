@@ -1,4 +1,5 @@
 import { Home } from './screens/Home';
+import { Journal } from './screens/Journal';
 import { OwnText } from './screens/OwnText';
 import { Preview } from './screens/Preview';
 import { Session } from './screens/Session';
@@ -13,6 +14,8 @@ function Screens() {
       return <Preview />;
     case 'session':
       return <Session />;
+    case 'journal':
+      return <Journal />;
     case 'own':
       return <OwnText />;
     case 'spike':

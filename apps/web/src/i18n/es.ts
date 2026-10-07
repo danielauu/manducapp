@@ -12,6 +12,7 @@ export const es = {
   'home.footer':
     'Los textos del evangelio pertenecen a sus titulares. Se piden en tiempo real y solo se guardan en este dispositivo.',
   'home.diagnostics': 'Pruebas técnicas',
+  'home.journal': 'Mis meditaciones',
 
   'error.title': 'No se pudo cargar el evangelio',
   'error.network': 'No hay conexión con el servicio. Revisar la conexión a internet e intentar de nuevo.',
@@ -96,6 +97,26 @@ export const es = {
   'reflection.savedText':
     'Quedó guardada en este dispositivo. El diario con todas las meditaciones llega en un próximo paso.',
   'reflection.home': 'Volver al inicio',
+
+  'journal.title': 'Mis meditaciones',
+  'journal.empty': 'Todavía no hay meditaciones. Aparecen aquí cuando se guardan al final de una sesión.',
+  'journal.local':
+    'Se guardan solo en este dispositivo. Conviene exportarlas de vez en cuando como copia de respaldo.',
+  'journal.exportTitle': 'Exportar',
+  'journal.copyAll': 'Copiar todo',
+  'journal.share': 'Compartir',
+  'journal.downloadText': 'Descargar texto',
+  'journal.downloadJson': 'Descargar copia de respaldo',
+  'journal.copied': 'Copiado.',
+  'journal.copyFailed': 'No se pudo copiar. Probar con «Descargar texto».',
+  'journal.shareFailed': 'No se pudo compartir.',
+  'journal.edit': 'Editar',
+  'journal.copy': 'Copiar',
+  'journal.delete': 'Borrar',
+  'journal.confirmDelete': 'Confirmar: borrar',
+  'journal.cancel': 'Cancelar',
+  'journal.save': 'Guardar cambios',
+  'journal.backToList': 'Volver a la lista',
 
   'own.title': 'Mi propio texto',
   'own.language': 'Idioma del texto',
