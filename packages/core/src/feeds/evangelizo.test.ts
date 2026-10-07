@@ -140,4 +140,11 @@ describe('fetchEvangelizoGospel', () => {
       code: 'bad-response',
     });
   });
+
+  it('distingue el límite de tasa (HTTP 429) para que quien llama pueda reintentar', async () => {
+    const fetchFn: FetchLike = () => Promise.resolve(respond('', false, 429));
+    await expect(fetchEvangelizoGospel(fetchFn, '2026-10-11', 'es')).rejects.toMatchObject({
+      code: 'rate-limited',
+    });
+  });
 });

@@ -1,4 +1,9 @@
-export type FeedErrorCode = 'out-of-range' | 'not-found' | 'bad-response' | 'network';
+export type FeedErrorCode =
+  | 'out-of-range'
+  | 'not-found'
+  | 'bad-response'
+  | 'rate-limited'
+  | 'network';
 
 export class FeedError extends Error {
   readonly code: FeedErrorCode;
