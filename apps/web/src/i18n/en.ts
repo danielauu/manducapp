@@ -13,6 +13,7 @@ export const en: Record<MessageKey, string> = {
   'home.footer':
     'Gospel texts belong to their rights holders. They are requested live and only stored on this device.',
   'home.diagnostics': 'Technical tests',
+  'home.journal': 'My meditations',
 
   'error.title': 'The Gospel could not be loaded',
   'error.network': 'Cannot reach the service. Check your internet connection and try again.',
@@ -96,6 +97,25 @@ export const en: Record<MessageKey, string> = {
   'reflection.savedText':
     'It was saved on this device. The journal with all your meditations arrives in an upcoming step.',
   'reflection.home': 'Back to the start',
+
+  'journal.title': 'My meditations',
+  'journal.empty': 'There are no meditations yet. They appear here once you save them at the end of a session.',
+  'journal.local': 'They are saved only on this device. Export them from time to time as a backup.',
+  'journal.exportTitle': 'Export',
+  'journal.copyAll': 'Copy all',
+  'journal.share': 'Share',
+  'journal.downloadText': 'Download text',
+  'journal.downloadJson': 'Download backup',
+  'journal.copied': 'Copied.',
+  'journal.copyFailed': 'Could not copy. Try "Download text".',
+  'journal.shareFailed': 'Could not share.',
+  'journal.edit': 'Edit',
+  'journal.copy': 'Copy',
+  'journal.delete': 'Delete',
+  'journal.confirmDelete': 'Confirm: delete',
+  'journal.cancel': 'Cancel',
+  'journal.save': 'Save changes',
+  'journal.backToList': 'Back to the list',
 
   'own.title': 'My own text',
   'own.language': 'Text language',

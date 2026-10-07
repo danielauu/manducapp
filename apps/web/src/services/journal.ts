@@ -53,6 +53,27 @@ export function addMeditation(
   return entry;
 }
 
+/** Cambia el texto de una meditación. Devuelve la meditación editada, o `undefined` si no existe. */
+export function updateMeditation(storage: KeyValueStorage, id: string, text: string): Meditation | undefined {
+  const all = listMeditations(storage);
+  const index = all.findIndex((entry) => entry.id === id);
+  const current = all[index];
+  if (current === undefined) return undefined;
+  const updated: Meditation = { ...current, text: text.trim() };
+  all[index] = updated;
+  storage.setItem(KEY, JSON.stringify(all));
+  return updated;
+}
+
+/** Borra una meditación. Devuelve `false` si no existía. */
+export function deleteMeditation(storage: KeyValueStorage, id: string): boolean {
+  const all = listMeditations(storage);
+  const remaining = all.filter((entry) => entry.id !== id);
+  if (remaining.length === all.length) return false;
+  storage.setItem(KEY, JSON.stringify(remaining));
+  return true;
+}
+
 export function newMeditationId(now: number): string {
   const random =
     typeof crypto !== 'undefined' && 'randomUUID' in crypto

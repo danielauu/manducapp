@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addMeditation, listMeditations, newMeditationId } from './journal';
+import { addMeditation, deleteMeditation, listMeditations, newMeditationId, updateMeditation } from './journal';
 import { memoryStorage } from './storage';
 
 const INPUT = { date: '2026-10-11', reference: 'Pr 1,1-3', lang: 'es' as const, text: '  Una meditación de prueba.  ' };
@@ -43,5 +43,35 @@ describe('diario de meditaciones', () => {
 
   it('newMeditationId genera ids distintos', () => {
     expect(newMeditationId(1)).not.toBe(newMeditationId(1));
+  });
+});
+
+describe('editar y borrar', () => {
+  it('editar cambia solo el texto, lo recorta y conserva el resto', () => {
+    const storage = memoryStorage();
+    const first = addMeditation(storage, INPUT, 1000, 'a');
+    addMeditation(storage, { ...INPUT, text: 'otra' }, 2000, 'b');
+    const updated = updateMeditation(storage, 'a', '  Texto nuevo.  ');
+    expect(updated).toEqual({ ...first, text: 'Texto nuevo.' });
+    expect(listMeditations(storage).map((entry) => [entry.id, entry.text])).toEqual([
+      ['b', 'otra'],
+      ['a', 'Texto nuevo.'],
+    ]);
+  });
+
+  it('editar algo que no existe no cambia nada', () => {
+    const storage = memoryStorage();
+    addMeditation(storage, INPUT, 1000, 'a');
+    expect(updateMeditation(storage, 'x', 'z')).toBeUndefined();
+    expect(listMeditations(storage)).toHaveLength(1);
+  });
+
+  it('borrar quita solo esa meditación y avisa si no existía', () => {
+    const storage = memoryStorage();
+    addMeditation(storage, INPUT, 1000, 'a');
+    addMeditation(storage, INPUT, 2000, 'b');
+    expect(deleteMeditation(storage, 'a')).toBe(true);
+    expect(listMeditations(storage).map((entry) => entry.id)).toEqual(['b']);
+    expect(deleteMeditation(storage, 'a')).toBe(false);
   });
 });

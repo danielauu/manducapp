@@ -46,6 +46,9 @@ export function Home() {
         </button>
       </div>
       {busy && <p className="status">{t('home.loading')}</p>}
+      <p className="journal-link">
+        <a href="#/journal">{t('home.journal')}</a>
+      </p>
 
       <footer>
         <p>{t('home.footer')}</p>

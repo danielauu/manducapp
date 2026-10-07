@@ -555,3 +555,79 @@ textarea[aria-label] {
   border: 1px solid var(--line);
   border-radius: 10px;
 }
+
+.journal-link {
+  margin: 20px 0 0;
+}
+
+.journal-link a {
+  color: var(--accent);
+  font-size: 1.05rem;
+}
+
+.entries {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: 12px 14px;
+  text-align: left;
+  background: var(--card);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.entry-title {
+  font-weight: 600;
+}
+
+.entry-sub {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.entry-preview {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted);
+}
+
+.entry-text {
+  margin: 12px 0 16px;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.export {
+  padding: 14px 16px;
+}
+
+.export h2 {
+  margin: 0 0 4px;
+}
+
+button.danger {
+  background: var(--bad);
+  color: #ffffff;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
