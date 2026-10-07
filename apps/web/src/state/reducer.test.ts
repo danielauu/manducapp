@@ -60,6 +60,13 @@ describe('reducer: idioma', () => {
   });
 });
 
+describe('reducer: idioma de la interfaz', () => {
+  it('cambiar el idioma de la interfaz no toca el texto elegido ni el idioma de lectura', () => {
+    const state: AppState = { ...INITIAL, gospel: VIEW, count: 4 };
+    expect(reducer(state, { type: 'setUiLang', uiLang: 'pl' })).toEqual({ ...state, uiLang: 'pl' });
+  });
+});
+
 describe('reducer: tiempo y rango', () => {
   it('elegir el rango lo guarda, y cambiar el tiempo o las uniones vuelve a la sugerencia', () => {
     const chosen = reducer(INITIAL, { type: 'setCount', count: 6 });

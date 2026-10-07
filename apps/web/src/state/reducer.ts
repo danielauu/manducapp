@@ -27,6 +27,7 @@ export interface AppState {
 
 export type Action =
   | { type: 'setLang'; lang: Lang }
+  | { type: 'setUiLang'; uiLang: UiLang }
   | { type: 'loadStart'; kind: Exclude<GospelKind, 'own'> }
   | { type: 'loadSuccess'; gospel: GospelView }
   | { type: 'loadFailure'; code: ErrorCode }
@@ -43,6 +44,8 @@ export function reducer(state: AppState, action: Action): AppState {
     case 'setLang':
       // Otro idioma invalida el texto elegido y cualquier error previo.
       return { ...state, lang: action.lang, gospel: null, error: null, pending: null, count: null };
+    case 'setUiLang':
+      return { ...state, uiLang: action.uiLang };
     case 'loadStart':
       return { ...state, loading: true, error: null, pending: action.kind };
     case 'loadSuccess':

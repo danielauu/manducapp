@@ -557,6 +557,9 @@ textarea[aria-label] {
 }
 
 .journal-link {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
   margin: 20px 0 0;
 }
 
