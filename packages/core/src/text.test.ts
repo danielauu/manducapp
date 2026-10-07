@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { collapseSpaces, decodeEntities, htmlToText, stripTags } from './text';
+import { collapseSpaces, decodeEntities, htmlToText, splitSentences, stripTags } from './text';
 
 describe('decodeEntities', () => {
   it('decodifica entidades numéricas, hexadecimales y con nombre', () => {
@@ -16,5 +16,26 @@ describe('stripTags y collapseSpaces', () => {
     expect(stripTags('Mt <font dir="ltr">22,1-14.</font>')).toBe('Mt 22,1-14.');
     expect(collapseSpaces('  a \u00a0\u00a0 b\n c ')).toBe('a b c');
     expect(htmlToText('<p>Ps&nbsp;22,\u00a01</p>')).toBe('Ps 22, 1');
+  });
+});
+
+describe('splitSentences', () => {
+  it('parte en cada cierre de frase y conserva las comillas de cierre', () => {
+    expect(splitSentences('Una frase. Otra frase? ¡Y otra más! Fin…')).toEqual([
+      'Una frase.',
+      'Otra frase?',
+      '¡Y otra más!',
+      'Fin…',
+    ]);
+    expect(splitSentences('Dijo: « Vamos. » Y se fue.')).toEqual(['Dijo: « Vamos. »', 'Y se fue.']);
+  });
+
+  it('no parte en puntos sin espacio después (números, referencias)', () => {
+    expect(splitSentences('Mt 22,1-14.5 es una referencia.')).toEqual(['Mt 22,1-14.5 es una referencia.']);
+  });
+
+  it('una frase sin punto final queda entera, y el vacío no genera nada', () => {
+    expect(splitSentences('sin punto final')).toEqual(['sin punto final']);
+    expect(splitSentences('   ')).toEqual([]);
   });
 });

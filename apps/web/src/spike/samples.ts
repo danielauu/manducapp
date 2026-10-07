@@ -10,15 +10,6 @@ export const LANG_TAGS: Record<Lang, string> = {
   pl: 'pl-PL',
 };
 
-export const LANG_NAMES: Record<Lang, string> = {
-  es: 'Español',
-  en: 'English',
-  fr: 'Français',
-  it: 'Italiano',
-  de: 'Deutsch',
-  pl: 'Polski',
-};
-
 /** Frases inventadas para probar la voz; no son texto bíblico. La larga dura cerca de 25 a 30 segundos. */
 export const SAMPLES: Record<Lang, { short: string; long: string }> = {
   es: {

@@ -12,7 +12,7 @@ import {
 } from '@manducapp/core';
 import { useState } from 'react';
 import { copyText, describeEnvironment, sleep } from './env';
-import { LANG_NAMES } from './samples';
+import { LANG_NAMES } from '../i18n';
 
 interface Row {
   lang: Lang;

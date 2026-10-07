@@ -1,13 +1,10 @@
 import {
   FeedError,
   compactDate,
-  fetchAelfGospel,
-  fetchEvangelizoGospel,
   isLang,
+  loadGospel,
   type FeedErrorCode,
   type FetchLike,
-  type Gospel,
-  type Lang,
 } from '@manducapp/core';
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
@@ -42,28 +39,8 @@ const defaultFetch: FetchLike = (url) =>
     signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
   });
 
-type Source = 'evangelizo' | 'aelf';
-
 function errorBody(code: string, message: string) {
   return { error: { code, message } };
-}
-
-async function loadGospel(
-  fetchFn: FetchLike,
-  date: string,
-  lang: Lang,
-  source: Source | undefined,
-): Promise<Gospel> {
-  if (source === 'aelf') return fetchAelfGospel(fetchFn, date);
-  try {
-    return await fetchEvangelizoGospel(fetchFn, date, lang);
-  } catch (error) {
-    // AELF es la fuente oficial del francés y no limita la fecha: sirve de respaldo.
-    if (lang === 'fr' && source === undefined && error instanceof FeedError) {
-      return fetchAelfGospel(fetchFn, date);
-    }
-    throw error;
-  }
 }
 
 export function createApp(options: AppOptions = {}) {

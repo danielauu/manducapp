@@ -1,5 +1,5 @@
 import { FeedError } from '../errors';
-import { collapseSpaces, htmlToText } from '../text';
+import { collapseSpaces, htmlToText, splitSentences } from '../text';
 import type { Gospel, IsoDate } from '../types';
 import { getText, type FetchLike } from './http';
 
@@ -32,16 +32,6 @@ function readingsOfFirstMass(json: unknown): AelfReading[] {
     ref: typeof reading.ref === 'string' ? reading.ref : undefined,
     contenu: typeof reading.contenu === 'string' ? reading.contenu : undefined,
   }));
-}
-
-/**
- * AELF entrega casi todo el evangelio en un solo párrafo, con saltos de línea poéticos de ~8
- * palabras. Cada párrafo se parte en frases (cierre `. ! ? …`, con comillas opcionales).
- * No se usa lookbehind: Safari anterior a 16.4 no compila el script entero si lo ve.
- */
-function splitSentences(text: string): string[] {
-  const pieces = text.match(/.+?(?:[.!?…]+(?:\s?[»”’'"])*(?=\s|$)|$)/g) ?? [];
-  return pieces.map(collapseSpaces).filter((piece) => piece.length > 0);
 }
 
 /** Descarta las fórmulas litúrgicas ("– Acclamons la Parole de Dieu", "OU LECTURE BRÈVE"). */
