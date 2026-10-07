@@ -1,9 +1,12 @@
 import { speechSeconds } from '@manducapp/core';
 import { LANG_TAGS } from './langTags';
 import type { SpeakOutcome, TtsPort } from './port';
+import { baseLang, groupVoicesByLang, sortVoices, type VoiceOption } from './voices';
 
 /** Pausa antes de hablar: Chrome puede descartar una lectura pedida justo después de `cancel()`. */
 const START_DELAY_MS = 60;
+/** En algunos navegadores las voces se cargan un instante después de abrir la página. */
+const VOICES_WAIT_MS = 1500;
 /** Si el evento de fin no llega a tiempo se da la lectura por fallida y la sesión sigue. */
 const TIMEOUT_FACTOR = 3;
 const TIMEOUT_MARGIN_MS = 10_000;
@@ -24,7 +27,7 @@ export function createWebSpeechTts(
   return {
     available: synth !== undefined,
 
-    speak(text, { lang, rate = 1 }) {
+    speak(text, { lang, rate = 1, voiceName }) {
       const engine = synth;
       if (!engine) return Promise.resolve<SpeakOutcome>('error');
 
@@ -37,6 +40,14 @@ export function createWebSpeechTts(
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = LANG_TAGS[lang];
         utterance.rate = rate;
+        // Una voz que ya no existe (otro dispositivo, voz desinstalada) se ignora y se usa la predeterminada.
+        const voice = voiceName
+          ? engine.getVoices().find((candidate) => candidate.name === voiceName && baseLang(candidate.lang) === lang)
+          : undefined;
+        if (voice) {
+          utterance.voice = voice;
+          utterance.lang = voice.lang;
+        }
 
         let settled = false;
         const finish = (outcome: SpeakOutcome) => {
@@ -59,6 +70,30 @@ export function createWebSpeechTts(
         utterance.onend = () => finish('end');
         utterance.onerror = (event) =>
           finish(event.error === 'canceled' || event.error === 'interrupted' ? 'cancelled' : 'error');
+      });
+    },
+
+    voices(lang) {
+      const engine = synth;
+      if (!engine) return Promise.resolve([]);
+      const read = (): VoiceOption[] =>
+        sortVoices(
+          groupVoicesByLang(engine.getVoices())[lang].map((voice) => ({
+            name: voice.name,
+            lang: voice.lang,
+            local: voice.localService,
+          })),
+        );
+      const ready = read();
+      if (ready.length > 0) return Promise.resolve(ready);
+      return new Promise<VoiceOption[]>((resolve) => {
+        const done = () => {
+          engine.removeEventListener('voiceschanged', done);
+          clearTimeout(timer);
+          resolve(read());
+        };
+        const timer = setTimeout(done, VOICES_WAIT_MS);
+        engine.addEventListener('voiceschanged', done);
       });
     },
 

@@ -123,6 +123,13 @@ export const it: Record<MessageKey, string> = {
 
   'settings.title': 'Impostazioni',
   'settings.uiLanguage': 'Lingua dell’app',
+  'settings.voice': 'Voce',
+  'settings.voiceDefault': 'Predefinita del dispositivo',
+  'settings.voiceNetwork': 'richiede una connessione',
+  'settings.voiceTest': 'Prova la voce',
+  'settings.voiceLoading': 'Ricerca delle voci…',
+  'settings.noVoices': 'Non ci sono voci per questa lingua su questo dispositivo. Si possono installare nelle impostazioni di sintesi vocale del sistema.',
+  'settings.voiceHint': 'Le voci dipendono dal dispositivo e dal browser.',
 
   'own.title': 'Il mio testo',
   'own.language': 'Lingua del testo',
