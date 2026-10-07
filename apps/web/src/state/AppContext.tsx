@@ -4,6 +4,7 @@ import { detectReadingLang, detectUiLang, translate, type MessageKey } from '../
 import { getGospel } from '../services/gospel';
 import { BUDGET_OPTIONS_MINUTES, DEFAULT_BUDGET_MINUTES, DEFAULT_STRATEGY, STRATEGIES } from '../services/plan';
 import { browserStorage, type KeyValueStorage } from '../services/storage';
+import { MAX_PEOPLE, normalizeNames } from '../services/group';
 import { gospelToView, ownTextToView } from '../services/view';
 import { navigate } from '../useRoute';
 import { reducer, type AppState, type ErrorCode } from './reducer';
@@ -14,6 +15,8 @@ interface Settings {
   lang?: Lang;
   budgetMinutes?: number;
   strategy?: LinkStrategy;
+  people?: number;
+  names?: string[];
 }
 
 /** Lo guardado en el dispositivo puede venir de otra versión: solo se aceptan valores válidos. */
@@ -21,7 +24,7 @@ function readSettings(storage: KeyValueStorage): Settings {
   try {
     const parsed: unknown = JSON.parse(storage.getItem(SETTINGS_KEY) ?? '{}');
     if (typeof parsed !== 'object' || parsed === null) return {};
-    const { lang, budgetMinutes, strategy } = parsed as Record<string, unknown>;
+    const { lang, budgetMinutes, strategy, people, names } = parsed as Record<string, unknown>;
     const settings: Settings = {};
     if (isLang(lang)) settings.lang = lang;
     if (typeof budgetMinutes === 'number' && (BUDGET_OPTIONS_MINUTES as readonly number[]).includes(budgetMinutes)) {
@@ -30,6 +33,10 @@ function readSettings(storage: KeyValueStorage): Settings {
     if (typeof strategy === 'string' && (STRATEGIES as readonly string[]).includes(strategy)) {
       settings.strategy = strategy as LinkStrategy;
     }
+    if (typeof people === 'number' && Number.isInteger(people) && people >= 1 && people <= MAX_PEOPLE) {
+      settings.people = people;
+    }
+    if (Array.isArray(names)) settings.names = normalizeNames(names);
     return settings;
   } catch {
     return {};
@@ -50,6 +57,8 @@ interface AppApi {
   setBudget: (minutes: number) => void;
   setStrategy: (strategy: LinkStrategy) => void;
   setCount: (count: number | null) => void;
+  setPeople: (people: number) => void;
+  setName: (index: number, name: string) => void;
 }
 
 const AppContext = createContext<AppApi | null>(null);
@@ -69,13 +78,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
       budgetMinutes: saved.budgetMinutes ?? DEFAULT_BUDGET_MINUTES,
       strategy: saved.strategy ?? DEFAULT_STRATEGY,
       count: null,
+      people: saved.people ?? 1,
+      names: saved.names ?? normalizeNames([]),
     };
   });
 
   useEffect(() => {
-    const settings: Settings = { lang: state.lang, budgetMinutes: state.budgetMinutes, strategy: state.strategy };
+    const settings: Settings = {
+      lang: state.lang,
+      budgetMinutes: state.budgetMinutes,
+      strategy: state.strategy,
+      people: state.people,
+      names: state.names,
+    };
     storage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  }, [storage, state.lang, state.budgetMinutes, state.strategy]);
+  }, [storage, state.lang, state.budgetMinutes, state.strategy, state.people, state.names]);
 
   useEffect(() => {
     document.documentElement.lang = state.uiLang;
@@ -88,6 +105,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const setBudget = useCallback((minutes: number) => dispatch({ type: 'setBudget', minutes }), []);
   const setStrategy = useCallback((strategy: LinkStrategy) => dispatch({ type: 'setStrategy', strategy }), []);
   const setCount = useCallback((count: number | null) => dispatch({ type: 'setCount', count }), []);
+  const setPeople = useCallback((people: number) => dispatch({ type: 'setPeople', people }), []);
+  const setName = useCallback((index: number, name: string) => dispatch({ type: 'setName', index, name }), []);
 
   const openGospel = useCallback<AppApi['openGospel']>(
     async (kind) => {
@@ -117,8 +136,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount }),
-    [state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount],
+    () => ({
+      state,
+      t,
+      setLang,
+      openGospel,
+      retry,
+      submitOwnText,
+      setBudget,
+      setStrategy,
+      setCount,
+      setPeople,
+      setName,
+    }),
+    [state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount, setPeople, setName],
   );
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

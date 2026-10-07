@@ -29,9 +29,10 @@ export function planSession(
   budgetMinutes: number,
   strategy: LinkStrategy,
   chosenCount: number | null,
+  people = 1,
 ): Plan {
   const total = sentences.length;
-  const options = { strategy };
+  const options = { strategy, people };
   const suggested = fitToBudget(sentences, budgetMinutes * 60, options).count;
   const count = Math.min(Math.max(chosenCount ?? suggested, Math.min(1, total)), total);
   const seconds = estimateSessionSeconds(buildSession(sentences.slice(0, count), options));

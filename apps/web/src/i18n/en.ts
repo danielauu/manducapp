@@ -40,6 +40,13 @@ export const en: Record<MessageKey, string> = {
   'plan.exceeds': 'Exceeds the time available',
   'plan.fit': 'Fit to the time available',
   'plan.skipped': 'Not memorized in this session',
+  'plan.people': 'People',
+  'group.names': 'Names (optional)',
+  'group.person': 'Person {number}',
+  'group.note': 'In a group each sentence is repeated 3 times per person, so the time grows with every member.',
+  'group.everyone': 'The whole group',
+  'group.turn': "{name}'s turn",
+  'group.next': 'Next: {name}',
 
   'session.start': 'Start',
   'session.kind.learn': 'Learn',

@@ -13,6 +13,8 @@ const INITIAL: AppState = {
   budgetMinutes: 30,
   strategy: 'pairs-and-blocks',
   count: null,
+  people: 1,
+  names: ['', '', '', '', ''],
 };
 
 describe('reducer: carga', () => {
@@ -73,5 +75,18 @@ describe('reducer: tiempo y rango', () => {
     const chosen = reducer(INITIAL, { type: 'setCount', count: 6 });
     expect(reducer(chosen, { type: 'loadSuccess', gospel: VIEW }).count).toBeNull();
     expect(reducer(chosen, { type: 'setGospel', gospel: VIEW }).count).toBeNull();
+  });
+});
+
+describe('reducer: grupo', () => {
+  it('cambiar las personas vuelve a la sugerencia automática', () => {
+    const chosen = reducer(INITIAL, { type: 'setCount', count: 6 });
+    expect(reducer(chosen, { type: 'setPeople', people: 3 })).toMatchObject({ people: 3, count: null });
+  });
+
+  it('un nombre se cambia sin tocar los demás', () => {
+    const state = reducer(INITIAL, { type: 'setName', index: 1, name: 'Ana' });
+    expect(state.names).toEqual(['', 'Ana', '', '', '']);
+    expect(reducer(state, { type: 'setName', index: 1, name: '' }).names).toEqual(['', '', '', '', '']);
   });
 });

@@ -353,7 +353,7 @@ p.bad {
 
 .plan-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
 }
 
@@ -511,4 +511,47 @@ p.bad {
 
 textarea[aria-label] {
   min-height: 12rem;
+}
+
+.turn-badge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin: 8px 0;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+}
+
+.turn-badge strong {
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+
+.turn-badge span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.names {
+  margin: 8px 0 12px;
+}
+
+.names summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.names input {
+  display: block;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 10px;
+  font: inherit;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
 }
