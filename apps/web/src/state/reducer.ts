@@ -1,4 +1,4 @@
-import type { Lang } from '@manducapp/core';
+import type { Lang, LinkStrategy } from '@manducapp/core';
 import type { UiLang } from '../i18n';
 import type { GospelKind, GospelView } from '../services/view';
 
@@ -14,6 +14,11 @@ export interface AppState {
   error: ErrorCode | null;
   /** Lo último que se intentó cargar, para ofrecer «Reintentar». */
   pending: Exclude<GospelKind, 'own'> | null;
+  /** Tiempo disponible para la sesión, en minutos. */
+  budgetMinutes: number;
+  strategy: LinkStrategy;
+  /** Oraciones que se memorizan, si el usuario las eligió; `null` usa lo que sugiere el tiempo disponible. */
+  count: number | null;
 }
 
 export type Action =
@@ -22,22 +27,32 @@ export type Action =
   | { type: 'loadSuccess'; gospel: GospelView }
   | { type: 'loadFailure'; code: ErrorCode }
   | { type: 'setGospel'; gospel: GospelView }
-  | { type: 'clearError' };
+  | { type: 'clearError' }
+  | { type: 'setBudget'; minutes: number }
+  | { type: 'setStrategy'; strategy: LinkStrategy }
+  | { type: 'setCount'; count: number | null };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
     case 'setLang':
       // Otro idioma invalida el texto elegido y cualquier error previo.
-      return { ...state, lang: action.lang, gospel: null, error: null, pending: null };
+      return { ...state, lang: action.lang, gospel: null, error: null, pending: null, count: null };
     case 'loadStart':
       return { ...state, loading: true, error: null, pending: action.kind };
     case 'loadSuccess':
-      return { ...state, loading: false, error: null, pending: null, gospel: action.gospel };
+      return { ...state, loading: false, error: null, pending: null, gospel: action.gospel, count: null };
     case 'loadFailure':
       return { ...state, loading: false, error: action.code };
     case 'setGospel':
-      return { ...state, gospel: action.gospel, error: null, pending: null };
+      return { ...state, gospel: action.gospel, error: null, pending: null, count: null };
     case 'clearError':
       return { ...state, error: null, pending: null };
+    // Cambiar el tiempo o las uniones vuelve a la sugerencia automática.
+    case 'setBudget':
+      return { ...state, budgetMinutes: action.minutes, count: null };
+    case 'setStrategy':
+      return { ...state, strategy: action.strategy, count: null };
+    case 'setCount':
+      return { ...state, count: action.count };
   }
 }

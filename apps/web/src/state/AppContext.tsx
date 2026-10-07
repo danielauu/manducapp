@@ -1,7 +1,8 @@
-import { FeedError, isLang, nextSunday, todayIso, type Lang } from '@manducapp/core';
+import { FeedError, isLang, nextSunday, todayIso, type Lang, type LinkStrategy } from '@manducapp/core';
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { detectReadingLang, detectUiLang, translate, type MessageKey } from '../i18n';
 import { getGospel } from '../services/gospel';
+import { BUDGET_OPTIONS_MINUTES, DEFAULT_BUDGET_MINUTES, DEFAULT_STRATEGY, STRATEGIES } from '../services/plan';
 import { browserStorage, type KeyValueStorage } from '../services/storage';
 import { gospelToView, ownTextToView } from '../services/view';
 import { navigate } from '../useRoute';
@@ -9,13 +10,29 @@ import { reducer, type AppState, type ErrorCode } from './reducer';
 
 const SETTINGS_KEY = 'manducapp:settings';
 
-function readSavedLang(storage: KeyValueStorage): Lang | undefined {
+interface Settings {
+  lang?: Lang;
+  budgetMinutes?: number;
+  strategy?: LinkStrategy;
+}
+
+/** Lo guardado en el dispositivo puede venir de otra versión: solo se aceptan valores válidos. */
+function readSettings(storage: KeyValueStorage): Settings {
   try {
     const parsed: unknown = JSON.parse(storage.getItem(SETTINGS_KEY) ?? '{}');
-    const lang = typeof parsed === 'object' && parsed !== null ? (parsed as { lang?: unknown }).lang : undefined;
-    return isLang(lang) ? lang : undefined;
+    if (typeof parsed !== 'object' || parsed === null) return {};
+    const { lang, budgetMinutes, strategy } = parsed as Record<string, unknown>;
+    const settings: Settings = {};
+    if (isLang(lang)) settings.lang = lang;
+    if (typeof budgetMinutes === 'number' && (BUDGET_OPTIONS_MINUTES as readonly number[]).includes(budgetMinutes)) {
+      settings.budgetMinutes = budgetMinutes;
+    }
+    if (typeof strategy === 'string' && (STRATEGIES as readonly string[]).includes(strategy)) {
+      settings.strategy = strategy as LinkStrategy;
+    }
+    return settings;
   } catch {
-    return undefined;
+    return {};
   }
 }
 
@@ -30,6 +47,9 @@ interface AppApi {
   openGospel: (kind: 'today' | 'sunday') => Promise<void>;
   retry: () => Promise<void>;
   submitOwnText: (text: string) => void;
+  setBudget: (minutes: number) => void;
+  setStrategy: (strategy: LinkStrategy) => void;
+  setCount: (count: number | null) => void;
 }
 
 const AppContext = createContext<AppApi | null>(null);
@@ -38,19 +58,24 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const storage = useMemo(browserStorage, []);
   const [state, dispatch] = useReducer(reducer, undefined, (): AppState => {
     const languages = navigator.languages.length > 0 ? navigator.languages : [navigator.language];
+    const saved = readSettings(storage);
     return {
-      lang: readSavedLang(storage) ?? detectReadingLang(languages),
+      lang: saved.lang ?? detectReadingLang(languages),
       uiLang: detectUiLang(languages),
       gospel: null,
       loading: false,
       error: null,
       pending: null,
+      budgetMinutes: saved.budgetMinutes ?? DEFAULT_BUDGET_MINUTES,
+      strategy: saved.strategy ?? DEFAULT_STRATEGY,
+      count: null,
     };
   });
 
   useEffect(() => {
-    storage.setItem(SETTINGS_KEY, JSON.stringify({ lang: state.lang }));
-  }, [storage, state.lang]);
+    const settings: Settings = { lang: state.lang, budgetMinutes: state.budgetMinutes, strategy: state.strategy };
+    storage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  }, [storage, state.lang, state.budgetMinutes, state.strategy]);
 
   useEffect(() => {
     document.documentElement.lang = state.uiLang;
@@ -60,6 +85,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const t = useCallback<AppApi['t']>((key, params) => translate(uiLang, key, params), [uiLang]);
 
   const setLang = useCallback((lang: Lang) => dispatch({ type: 'setLang', lang }), []);
+  const setBudget = useCallback((minutes: number) => dispatch({ type: 'setBudget', minutes }), []);
+  const setStrategy = useCallback((strategy: LinkStrategy) => dispatch({ type: 'setStrategy', strategy }), []);
+  const setCount = useCallback((count: number | null) => dispatch({ type: 'setCount', count }), []);
 
   const openGospel = useCallback<AppApi['openGospel']>(
     async (kind) => {
@@ -89,8 +117,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ state, t, setLang, openGospel, retry, submitOwnText }),
-    [state, t, setLang, openGospel, retry, submitOwnText],
+    () => ({ state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount }),
+    [state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount],
   );
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
