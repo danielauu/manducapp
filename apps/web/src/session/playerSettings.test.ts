@@ -10,6 +10,7 @@ describe('parsePlayerSettings', () => {
       hideFinalText: true,
       rate: 1,
       pace: 'normal',
+      textSize: 'normal',
       voices: {},
     });
   });
@@ -23,6 +24,7 @@ describe('parsePlayerSettings', () => {
       hideFinalText: false,
       rate: 0.8,
       pace: 'normal',
+      textSize: 'normal',
       voices: {},
     });
   });
@@ -34,6 +36,7 @@ describe('parsePlayerSettings', () => {
       hideFinalText: true,
       rate: 1,
       pace: 'normal',
+      textSize: 'normal',
       voices: {},
     });
     expect(parsePlayerSettings('no es json')).toEqual(DEFAULT_PLAYER_SETTINGS);
@@ -62,5 +65,15 @@ describe('ritmo de repetición', () => {
     expect(parsePlayerSettings('{"pace":"turbo"}').pace).toBe('normal');
     expect(parsePlayerSettings('{"pace":3}').pace).toBe('normal');
     expect(parsePlayerSettings('{}').pace).toBe('normal');
+  });
+});
+
+describe('tamaño del texto', () => {
+  it('acepta los tres tamaños y descarta cualquier otro valor', () => {
+    expect(parsePlayerSettings('{"textSize":"large"}').textSize).toBe('large');
+    expect(parsePlayerSettings('{"textSize":"xlarge"}').textSize).toBe('xlarge');
+    expect(parsePlayerSettings('{"textSize":"gigante"}').textSize).toBe('normal');
+    expect(parsePlayerSettings('{"textSize":2}').textSize).toBe('normal');
+    expect(parsePlayerSettings('{}').textSize).toBe('normal');
   });
 });

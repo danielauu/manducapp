@@ -7,6 +7,9 @@ const KEY = 'manducapp:player';
 
 export const RATE_OPTIONS = [0.8, 1, 1.2] as const;
 
+export type TextSize = 'normal' | 'large' | 'xlarge';
+export const TEXT_SIZES: readonly TextSize[] = ['normal', 'large', 'xlarge'];
+
 export interface PlayerSettings {
   /** Pasa solo al siguiente paso cuando se acaba el tiempo del turno. */
   autoAdvance: boolean;
@@ -17,6 +20,8 @@ export interface PlayerSettings {
   rate: number;
   /** Qué tan rápido repite quien reza; cambia la estimación de tiempo y el contador. */
   pace: Pace;
+  /** Tamaño del texto que se lee en el reproductor. */
+  textSize: TextSize;
   /** Voz elegida para cada idioma (nombre de la voz del dispositivo); sin entrada, la predeterminada. */
   voices: Record<string, string>;
 }
@@ -27,6 +32,7 @@ export const DEFAULT_PLAYER_SETTINGS: PlayerSettings = {
   hideFinalText: true,
   rate: 1,
   pace: DEFAULT_PACE,
+  textSize: 'normal',
   voices: {},
 };
 
@@ -48,7 +54,7 @@ export function parsePlayerSettings(raw: string | null): PlayerSettings {
   try {
     const parsed: unknown = JSON.parse(raw ?? '{}');
     if (typeof parsed !== 'object' || parsed === null) return DEFAULT_PLAYER_SETTINGS;
-    const { autoAdvance, voiceEveryRepetition, hideFinalText, rate, pace, voices } = parsed as Record<string, unknown>;
+    const { autoAdvance, voiceEveryRepetition, hideFinalText, rate, pace, textSize, voices } = parsed as Record<string, unknown>;
     return {
       autoAdvance: typeof autoAdvance === 'boolean' ? autoAdvance : DEFAULT_PLAYER_SETTINGS.autoAdvance,
       voiceEveryRepetition:
@@ -62,6 +68,7 @@ export function parsePlayerSettings(raw: string | null): PlayerSettings {
           ? rate
           : DEFAULT_PLAYER_SETTINGS.rate,
       pace: PACES.find((candidate) => candidate === pace) ?? DEFAULT_PACE,
+      textSize: TEXT_SIZES.find((candidate) => candidate === textSize) ?? DEFAULT_PLAYER_SETTINGS.textSize,
       voices: parseVoices(voices),
     };
   } catch {

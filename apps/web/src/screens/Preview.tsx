@@ -153,6 +153,7 @@ export function Preview() {
       <ol className="sentences" lang={gospel.lang}>
         {gospel.sentences.map((sentence, index) => (
           <li key={index} className={index < plan.count ? undefined : 'skipped'}>
+            {index >= plan.count && <span className="sr-only">{t('plan.skipped')}: </span>}
             {sentence}
           </li>
         ))}
