@@ -11,6 +11,11 @@ interface LogEntry {
 
 type Outcome = 'end' | 'error' | 'timeout' | 'cancelled';
 
+interface Target {
+  lang: Lang;
+  voiceName: string;
+}
+
 const MAX_LOG_ENTRIES = 500;
 const supported = typeof window !== 'undefined' && 'speechSynthesis' in window;
 
@@ -53,13 +58,14 @@ export function TtsSpike() {
   const langVoices = groups[lang];
 
   const speakOnce = useCallback(
-    (text: string, label: string): Promise<Outcome> =>
+    (text: string, label: string, target: Target): Promise<Outcome> =>
       new Promise((resolve) => {
         const synth = window.speechSynthesis;
-        const voice = voices.find((candidate) => candidate.name === voiceName);
+        const voice = voices.find((candidate) => candidate.name === target.voiceName);
         const spoken = new SpeechSynthesisUtterance(text);
-        spoken.lang = voice?.lang ?? LANG_TAGS[lang];
+        spoken.lang = voice?.lang ?? LANG_TAGS[target.lang];
         if (voice) spoken.voice = voice;
+        label = `${label} [${spoken.lang} · ${voice?.name ?? 'voz por defecto'}]`;
         spoken.rate = rate;
         utterance.current = spoken; // referencia viva: Chrome puede descartar el objeto y perder el evento de fin
 
@@ -89,7 +95,7 @@ export function TtsSpike() {
         };
         synth.speak(spoken);
       }),
-    [addLog, lang, rate, voiceName, voices],
+    [addLog, rate, voices],
   );
 
   const runSequence = useCallback(
@@ -99,7 +105,7 @@ export function TtsSpike() {
       addLog(`--- ${label}: ${repetitions} repetición(es) ---`);
       let ended = 0;
       for (let index = 1; index <= repetitions && !cancelled.current; index++) {
-        const outcome = await speakOnce(text, `${label} #${index}`);
+        const outcome = await speakOnce(text, `${label} #${index}`, { lang, voiceName });
         if (outcome === 'end') ended += 1;
         if (outcome === 'timeout' || outcome === 'error') break;
         if (index < repetitions) await sleep(gapMs);
@@ -107,8 +113,24 @@ export function TtsSpike() {
       addLog(`--- fin: ${ended}/${repetitions} repeticiones con evento de fin ---`);
       setBusy(false);
     },
-    [addLog, speakOnce],
+    [addLog, lang, speakOnce, voiceName],
   );
+
+  /** Lee la frase corta de cada idioma con la voz por defecto, para juzgar de oído si alcanza. */
+  const runAllLanguages = useCallback(async () => {
+    setBusy(true);
+    cancelled.current = false;
+    addLog('--- Los 6 idiomas, voz por defecto ---');
+    let ended = 0;
+    for (const code of LANGS) {
+      if (cancelled.current) break;
+      const outcome = await speakOnce(SAMPLES[code].short, `Idioma ${code}`, { lang: code, voiceName: '' });
+      if (outcome === 'end') ended += 1;
+      await sleep(600);
+    }
+    addLog(`--- fin: ${ended}/${LANGS.length} idiomas con evento de fin ---`);
+    setBusy(false);
+  }, [addLog, speakOnce]);
 
   const stop = () => {
     cancelled.current = true;
@@ -217,6 +239,9 @@ export function TtsSpike() {
         </button>
         <button disabled={busy} onClick={() => void runSequence(sample.short, 3, 800, 'Repetir 3 veces')}>
           Repetir la corta 3 veces
+        </button>
+        <button disabled={busy} onClick={() => void runAllLanguages()}>
+          Leer en los 6 idiomas
         </button>
         <button disabled={busy} onClick={() => void runSequence(sample.short, 25, 1500, 'Maratón')}>
           Maratón de 25 repeticiones (~2 min)
