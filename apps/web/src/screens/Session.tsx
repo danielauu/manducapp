@@ -1,14 +1,16 @@
 import { buildSession, type SessionStep } from '@manducapp/core';
-import { useEffect, useId, useMemo, type CSSProperties } from 'react';
+import { useEffect, useId, useMemo, useState, type CSSProperties } from 'react';
 import { Layout } from '../components/Layout';
 import type { MessageKey } from '../i18n';
 import { RATE_OPTIONS, usePlayerSettings } from '../session/playerSettings';
 import { useSessionPlayer } from '../session/useSessionPlayer';
 import { useWakeLock } from '../session/useWakeLock';
 import { planSession } from '../services/plan';
+import type { GospelView } from '../services/view';
 import { useApp } from '../state/AppContext';
 import { createWebSpeechTts } from '../tts/webSpeech';
 import { navigate } from '../useRoute';
+import { Reflection } from './Reflection';
 
 type Translate = ReturnType<typeof useApp>['t'];
 
@@ -17,7 +19,7 @@ const KIND_LABELS: Record<SessionStep['kind'], MessageKey> = {
   link: 'session.kind.link',
   block: 'session.kind.block',
   final: 'session.kind.final',
-  reflection: 'session.done.title',
+  reflection: 'reflection.silenceTitle',
 };
 
 function stepHeading(t: Translate, step: SessionStep, sentenceCount: number): string {
@@ -42,22 +44,30 @@ export function Session() {
     if (!gospel) navigate('home');
   }, [gospel]);
 
-  const steps = useMemo(() => {
+  const memorized = useMemo(() => {
     if (!gospel) return [];
     const plan = planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count);
-    return buildSession(gospel.sentences.slice(0, plan.count), { strategy: state.strategy });
+    return gospel.sentences.slice(0, plan.count);
   }, [gospel, state.budgetMinutes, state.strategy, state.count]);
+  const steps = useMemo(() => buildSession(memorized, { strategy: state.strategy }), [memorized, state.strategy]);
 
   if (!gospel || steps.length === 0) return null;
-  const lastSentence = steps.find((step) => step.kind === 'final')?.to ?? -1;
-  return <Player steps={steps} sentenceCount={lastSentence + 1} />;
+  return <Player gospel={gospel} sentences={memorized} steps={steps} />;
 }
 
-function Player({ steps, sentenceCount }: { steps: readonly SessionStep[]; sentenceCount: number }) {
+interface PlayerProps {
+  gospel: GospelView;
+  /** Las oraciones que se memorizan en esta sesión. */
+  sentences: readonly string[];
+  steps: readonly SessionStep[];
+}
+
+function Player({ gospel, sentences, steps }: PlayerProps) {
   const { state: app, t } = useApp();
   const [settings, updateSettings] = usePlayerSettings();
   const tts = useMemo(createWebSpeechTts, []);
   const rateId = useId();
+  const [peeking, setPeeking] = useState(false);
 
   const player = useSessionPlayer({
     steps,
@@ -71,21 +81,20 @@ function Player({ steps, sentenceCount }: { steps: readonly SessionStep[]; sente
   const finished = state.phase === 'done';
   const wakeLock = useWakeLock(!finished);
 
-  if (finished || !step) {
-    return (
-      <Layout back="preview">
-        <h1>{t('session.done.title')}</h1>
-        <p className="muted">{t('session.done.text')}</p>
-        <div className="actions">
-          <button onClick={() => navigate('preview')}>{t('session.done.back')}</button>
-        </div>
-      </Layout>
-    );
-  }
+  // El texto vuelve a ocultarse al cambiar de paso.
+  useEffect(() => {
+    setPeeking(false);
+  }, [state.index]);
 
+  if (finished || !step) return <Reflection gospel={gospel} sentences={sentences} />;
+
+  const isFinal = step.kind === 'final';
   const turnPhase = state.phase === 'turn';
-  const prompt = step.kind === 'final' ? t('session.yourTurnFinal') : t('session.yourTurn');
+  const hidden = isFinal && settings.hideFinalText && !peeking;
+  const prompt = isFinal ? t('session.yourTurnFinal') : t('session.yourTurn');
   const status = state.paused ? t('session.paused') : turnPhase ? prompt : t('session.listening');
+  // El recitado final no avanza solo: quien reza decide cuándo terminó.
+  const showCountdown = turnPhase && settings.autoAdvance && !isFinal;
 
   return (
     <Layout back="preview">
@@ -99,19 +108,28 @@ function Player({ steps, sentenceCount }: { steps: readonly SessionStep[]; sente
       >
         <span style={{ width: `${Math.round(player.progress * 100)}%` }} />
       </div>
-      <p className="eyebrow">{stepHeading(t, step, sentenceCount)}</p>
+      <p className="eyebrow">{stepHeading(t, step, sentences.length)}</p>
       {step.repetitions > 1 && (
         <p className="meta">{t('session.repetition', { current: step.repetition, total: step.repetitions })}</p>
       )}
 
-      <blockquote className="stage" lang={app.lang}>
-        {step.text}
-      </blockquote>
+      {hidden ? (
+        <blockquote className="stage hidden-text">{t('session.textHidden')}</blockquote>
+      ) : (
+        <blockquote className="stage" lang={app.lang}>
+          {step.text}
+        </blockquote>
+      )}
+      {isFinal && settings.hideFinalText && (
+        <button className="secondary peek" onClick={() => setPeeking((previous) => !previous)}>
+          {peeking ? t('session.hideText') : t('session.showText')}
+        </button>
+      )}
 
       <p className={turnPhase && !state.paused ? 'phase turn' : 'phase'} role="status">
         {status}
       </p>
-      {turnPhase && settings.autoAdvance && (
+      {showCountdown && (
         <div className={state.paused ? 'countdown paused' : 'countdown'} aria-hidden="true">
           <span key={state.nonce} style={{ '--turn': `${player.turnMs}ms` } as CSSProperties} />
         </div>
@@ -131,8 +149,8 @@ function Player({ steps, sentenceCount }: { steps: readonly SessionStep[]; sente
         ) : (
           <button onClick={player.pause}>{t('session.pause')}</button>
         )}
-        <button className="secondary" onClick={player.next}>
-          {t('session.next')} →
+        <button className={isFinal ? undefined : 'secondary'} onClick={player.next}>
+          {isFinal ? t('session.finished') : `${t('session.next')} →`}
         </button>
       </div>
       {tts.available && (
@@ -160,6 +178,14 @@ function Player({ steps, sentenceCount }: { steps: readonly SessionStep[]; sente
             onChange={(event) => updateSettings({ voiceEveryRepetition: event.target.checked })}
           />
           {t('session.voiceEvery')}
+        </label>
+        <label className="check">
+          <input
+            type="checkbox"
+            checked={settings.hideFinalText}
+            onChange={(event) => updateSettings({ hideFinalText: event.target.checked })}
+          />
+          {t('session.hideFinal')}
         </label>
         <div className="field">
           <label htmlFor={rateId}>{t('session.speed')}</label>

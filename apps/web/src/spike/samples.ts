@@ -1,15 +1,5 @@
 import type { Lang } from '@manducapp/core';
 
-/** Etiqueta BCP 47 que se le pide a la voz cuando no se elige una concreta. */
-export const LANG_TAGS: Record<Lang, string> = {
-  es: 'es-ES',
-  en: 'en-US',
-  fr: 'fr-FR',
-  it: 'it-IT',
-  de: 'de-DE',
-  pl: 'pl-PL',
-};
-
 /** Frases inventadas para probar la voz; no son texto bíblico. La larga dura cerca de 25 a 30 segundos. */
 export const SAMPLES: Record<Lang, { short: string; long: string }> = {
   es: {

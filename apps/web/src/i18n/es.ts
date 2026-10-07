@@ -68,9 +68,27 @@ export const es = {
     'Sesión en pausa: la pantalla se apagó o se cambió de aplicación. Tocar «Seguir» para continuar.',
   'session.noWakeLock':
     'Este navegador no puede mantener la pantalla encendida. Conviene no dejar que se apague durante la sesión.',
-  'session.done.title': 'Sesión terminada',
-  'session.done.text': 'La pausa de reflexión y el diario de meditaciones llegan en el siguiente paso.',
-  'session.done.back': 'Volver a la vista previa',
+  'session.hideFinal': 'Ocultar el texto en el recitado final',
+  'session.textHidden': 'El texto está oculto: recitar de memoria.',
+  'session.showText': 'Mostrar el texto',
+  'session.hideText': 'Ocultar el texto',
+  'session.finished': 'Terminé',
+
+  'reflection.silenceTitle': 'Un momento de silencio',
+  'reflection.silenceText':
+    'Quedarse en silencio con lo que se acaba de memorizar. Cuando se quiera, escribir una meditación.',
+  'reflection.write': 'Escribir una meditación',
+  'reflection.skip': 'Terminar sin escribir',
+  'reflection.reread': 'Leer el texto de nuevo',
+  'reflection.writeTitle': 'Mi meditación',
+  'reflection.placeholder': 'Escribir aquí lo que este texto dice hoy…',
+  'reflection.save': 'Guardar',
+  'reflection.finishNoSave': 'Terminar sin guardar',
+  'reflection.private': 'Se guarda solo en este dispositivo.',
+  'reflection.saved': 'Meditación guardada',
+  'reflection.savedText':
+    'Quedó guardada en este dispositivo. El diario con todas las meditaciones llega en un próximo paso.',
+  'reflection.home': 'Volver al inicio',
 
   'own.title': 'Mi propio texto',
   'own.language': 'Idioma del texto',

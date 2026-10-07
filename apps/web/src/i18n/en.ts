@@ -68,9 +68,27 @@ export const en: Record<MessageKey, string> = {
   'session.interrupted': 'Session paused: the screen turned off or you switched apps. Tap "Resume" to continue.',
   'session.noWakeLock':
     'This browser cannot keep the screen on. Try not to let it turn off during the session.',
-  'session.done.title': 'Session finished',
-  'session.done.text': 'The reflection pause and the meditation journal arrive in the next step.',
-  'session.done.back': 'Back to the preview',
+  'session.hideFinal': 'Hide the text in the final recitation',
+  'session.textHidden': 'The text is hidden: recite from memory.',
+  'session.showText': 'Show the text',
+  'session.hideText': 'Hide the text',
+  'session.finished': 'I am done',
+
+  'reflection.silenceTitle': 'A moment of silence',
+  'reflection.silenceText':
+    'Stay quiet with what you have just memorized. When you are ready, write a meditation.',
+  'reflection.write': 'Write a meditation',
+  'reflection.skip': 'Finish without writing',
+  'reflection.reread': 'Read the text again',
+  'reflection.writeTitle': 'My meditation',
+  'reflection.placeholder': 'Write here what this text says to you today…',
+  'reflection.save': 'Save',
+  'reflection.finishNoSave': 'Finish without saving',
+  'reflection.private': 'It is saved only on this device.',
+  'reflection.saved': 'Meditation saved',
+  'reflection.savedText':
+    'It was saved on this device. The journal with all your meditations arrives in an upcoming step.',
+  'reflection.home': 'Back to the start',
 
   'own.title': 'My own text',
   'own.language': 'Text language',
