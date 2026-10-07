@@ -1,5 +1,6 @@
 import { dayOfWeek, todayIso, nextSunday } from '@manducapp/core';
 import { Layout } from '../components/Layout';
+import { PwaBanner } from '../components/PwaBanner';
 import { LanguagePicker } from '../components/LanguagePicker';
 import { formatDay } from '../format';
 import { useApp } from '../state/AppContext';
@@ -14,6 +15,7 @@ export function Home() {
 
   return (
     <Layout>
+      <PwaBanner />
       <h1>{t('home.title')}</h1>
       <LanguagePicker />
 

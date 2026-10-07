@@ -1,7 +1,7 @@
 import type { FetchLike, Gospel } from '@manducapp/core';
 import { describe, expect, it } from 'vitest';
 import { cacheKey, pruneGospelCache, readCachedGospel, writeCachedGospel } from './cache';
-import { getGospel } from './gospel';
+import { getGospel, prefetchGospels } from './gospel';
 import { memoryStorage } from './storage';
 import { estimateMinutes, gospelToView, ownTextToView } from './view';
 
@@ -135,5 +135,51 @@ describe('vistas', () => {
     expect(estimateMinutes(['una oración corta de prueba'])).toBe(1);
     const sentences = Array.from({ length: 14 }, () => Array.from({ length: 19 }, (_, index) => `p${index}`).join(' '));
     expect(estimateMinutes(sentences)).toBeGreaterThan(10);
+  });
+});
+
+describe('prefetchGospels', () => {
+  const xml = `<?xml version="1.0"?><data-set><evangelizo>
+    <litugic_t><![CDATA[Día de prueba]]></litugic_t>
+    <reading_gospel_st><![CDATA[Pr 1,1.]]></reading_gospel_st>
+    <reading_gospel><![CDATA[Una línea de prueba bastante normal.]]></reading_gospel>
+  </evangelizo></data-set>`;
+
+  function countingFetch(fail = false) {
+    const urls: string[] = [];
+    const fetchFn: FetchLike = (url) => {
+      urls.push(url);
+      if (fail) return Promise.reject(new Error('sin red'));
+      const body = url.includes('type=xml') ? xml : 'x<br /><br />Crédito de prueba.';
+      return Promise.resolve({ ok: true, status: 200, text: () => Promise.resolve(body) });
+    };
+    return { fetchFn, urls };
+  }
+
+  it('guarda hoy y el próximo domingo, y la segunda vez no pide nada', async () => {
+    const storage = memoryStorage();
+    const first = countingFetch();
+    await prefetchGospels('es', { fetchFn: first.fetchFn, storage }, '2026-10-07'); // miércoles
+    expect(readCachedGospel(storage, '2026-10-07', 'es')).toBeDefined();
+    expect(readCachedGospel(storage, '2026-10-11', 'es')).toBeDefined();
+    expect(first.urls.length).toBeGreaterThan(0);
+
+    const second = countingFetch();
+    await prefetchGospels('es', { fetchFn: second.fetchFn, storage }, '2026-10-07');
+    expect(second.urls).toHaveLength(0);
+  });
+
+  it('si hoy es domingo pide un solo día', async () => {
+    const storage = memoryStorage();
+    await prefetchGospels('es', { fetchFn: countingFetch().fetchFn, storage }, '2026-10-11');
+    expect(storage.keys().filter((key) => key.startsWith('manducapp:gospel:'))).toHaveLength(1);
+  });
+
+  it('un fallo de red no rompe nada ni guarda nada', async () => {
+    const storage = memoryStorage();
+    await expect(
+      prefetchGospels('es', { fetchFn: countingFetch(true).fetchFn, storage }, '2026-10-07'),
+    ).resolves.toBeUndefined();
+    expect(storage.keys()).toEqual([]);
   });
 });

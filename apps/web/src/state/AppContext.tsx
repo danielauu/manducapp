@@ -1,7 +1,7 @@
 import { FeedError, isLang, nextSunday, todayIso, type Lang, type LinkStrategy } from '@manducapp/core';
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
 import { detectLang, translate, type MessageKey } from '../i18n';
-import { getGospel } from '../services/gospel';
+import { getGospel, prefetchGospels } from '../services/gospel';
 import { BUDGET_OPTIONS_MINUTES, DEFAULT_BUDGET_MINUTES, DEFAULT_STRATEGY, STRATEGIES } from '../services/plan';
 import { browserStorage, type KeyValueStorage } from '../services/storage';
 import { MAX_PEOPLE, normalizeNames } from '../services/group';
@@ -101,6 +101,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = state.uiLang;
   }, [state.uiLang]);
+
+  // Con conexión, deja guardado hoy y el domingo para poder abrirlos después sin red.
+  useEffect(() => {
+    if (!navigator.onLine) return;
+    void prefetchGospels(state.lang, { fetchFn: (url) => fetch(url), storage });
+  }, [storage, state.lang]);
 
   const uiLang = state.uiLang;
   const t = useCallback<AppApi['t']>((key, params) => translate(uiLang, key, params), [uiLang]);
