@@ -107,6 +107,7 @@ Devuelve una lista de pasos: `{tipo, rango, hablante, repeticion, texto}`.
 - Verificar `fetch` a Evangelizo desde el navegador en los 6 idiomas.
 - **Spike de TTS en un iPhone real instalado como PWA y en Chrome Android**: voces disponibles en los 6 idiomas, fiabilidad del evento de fin de frase, comportamiento con pantalla bloqueada y Wake Lock.
 - *Compuerta de decisión*: si el TTS en iPhone PWA falla, se adelanta el envoltorio Capacitor con plugin nativo.
+- *Resultado (2026-10-07)*: en Android hay voz local en los 6 idiomas y el evento de fin llega siempre; la pantalla bloqueada se descartó como caso de uso (la sesión asume pantalla encendida). Queda solo la prueba en iPhone. Detalle en [ADR-0002](decisions/0002-voz-del-navegador-y-pantalla-encendida.md).
 
 **Fase 1: Núcleo y backend con tests**
 `packages/core` (calendar, parsers, segment, timing, session) y `apps/api` (endpoint `/v1/gospel` con caché de borde y fallback AELF para francés). Todo con Vitest. Despliegue del Worker.
