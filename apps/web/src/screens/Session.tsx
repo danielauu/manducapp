@@ -5,6 +5,7 @@ import type { MessageKey } from '../i18n';
 import { RATE_OPTIONS, usePlayerSettings } from '../session/playerSettings';
 import { useSessionPlayer } from '../session/useSessionPlayer';
 import { useWakeLock } from '../session/useWakeLock';
+import { displayName } from '../services/group';
 import { planSession } from '../services/plan';
 import type { GospelView } from '../services/view';
 import { useApp } from '../state/AppContext';
@@ -46,10 +47,13 @@ export function Session() {
 
   const memorized = useMemo(() => {
     if (!gospel) return [];
-    const plan = planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count);
+    const plan = planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people);
     return gospel.sentences.slice(0, plan.count);
-  }, [gospel, state.budgetMinutes, state.strategy, state.count]);
-  const steps = useMemo(() => buildSession(memorized, { strategy: state.strategy }), [memorized, state.strategy]);
+  }, [gospel, state.budgetMinutes, state.strategy, state.count, state.people]);
+  const steps = useMemo(
+    () => buildSession(memorized, { strategy: state.strategy, people: state.people }),
+    [memorized, state.strategy, state.people],
+  );
 
   if (!gospel || steps.length === 0) return null;
   return <Player gospel={gospel} sentences={memorized} steps={steps} />;
@@ -96,6 +100,10 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
   // El recitado final no avanza solo: quien reza decide cuándo terminó.
   const showCountdown = turnPhase && settings.autoAdvance && !isFinal;
 
+  const personName = (index: number) => displayName(app.names, index, (number) => t('group.person', { number }));
+  const nextStep = steps[state.index + 1];
+  const showNext = nextStep !== undefined && nextStep.kind !== 'reflection' && nextStep.speaker !== step.speaker;
+
   return (
     <Layout back="preview">
       <div
@@ -111,6 +119,17 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
       <p className="eyebrow">{stepHeading(t, step, sentences.length)}</p>
       {step.repetitions > 1 && (
         <p className="meta">{t('session.repetition', { current: step.repetition, total: step.repetitions })}</p>
+      )}
+      {app.people > 1 && (
+        <p className="turn-badge">
+          <strong>
+            {step.speaker === null ? t('group.everyone') : t('group.turn', { name: personName(step.speaker) })}
+          </strong>
+          {showNext && nextStep.speaker !== null && (
+            <span>{t('group.next', { name: personName(nextStep.speaker) })}</span>
+          )}
+          {showNext && nextStep.speaker === null && <span>{t('group.next', { name: t('group.everyone') })}</span>}
+        </p>
       )}
 
       {hidden ? (

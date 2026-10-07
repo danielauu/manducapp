@@ -19,6 +19,10 @@ export interface AppState {
   strategy: LinkStrategy;
   /** Oraciones que se memorizan, si el usuario las eligió; `null` usa lo que sugiere el tiempo disponible. */
   count: number | null;
+  /** Personas que rezan juntas, de 1 a 5. */
+  people: number;
+  /** Nombres de las personas (siempre cinco, vacío = «Persona N»). */
+  names: string[];
 }
 
 export type Action =
@@ -30,7 +34,9 @@ export type Action =
   | { type: 'clearError' }
   | { type: 'setBudget'; minutes: number }
   | { type: 'setStrategy'; strategy: LinkStrategy }
-  | { type: 'setCount'; count: number | null };
+  | { type: 'setCount'; count: number | null }
+  | { type: 'setPeople'; people: number }
+  | { type: 'setName'; index: number; name: string };
 
 export function reducer(state: AppState, action: Action): AppState {
   switch (action.type) {
@@ -54,5 +60,10 @@ export function reducer(state: AppState, action: Action): AppState {
       return { ...state, strategy: action.strategy, count: null };
     case 'setCount':
       return { ...state, count: action.count };
+    // Con más personas cambian el tiempo y lo que cabe: se vuelve a la sugerencia automática.
+    case 'setPeople':
+      return { ...state, people: action.people, count: null };
+    case 'setName':
+      return { ...state, names: state.names.map((name, index) => (index === action.index ? action.name : name)) };
   }
 }

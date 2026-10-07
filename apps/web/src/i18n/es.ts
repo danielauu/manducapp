@@ -39,6 +39,13 @@ export const es = {
   'plan.exceeds': 'Supera el tiempo disponible',
   'plan.fit': 'Ajustar al tiempo disponible',
   'plan.skipped': 'No se memoriza en esta sesión',
+  'plan.people': 'Personas',
+  'group.names': 'Nombres (opcional)',
+  'group.person': 'Persona {number}',
+  'group.note': 'En grupo cada oración se repite 3 veces por persona, así que el tiempo crece con cada integrante.',
+  'group.everyone': 'Todo el grupo',
+  'group.turn': 'Turno de {name}',
+  'group.next': 'Sigue: {name}',
 
   'session.start': 'Comenzar',
   'session.kind.learn': 'Aprender',

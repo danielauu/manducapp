@@ -52,3 +52,26 @@ describe('planSession', () => {
     expect(plan).toMatchObject({ count: 1, fits: false });
   });
 });
+
+describe('planSession en grupo', () => {
+  it('con más personas el mismo texto tarda más', () => {
+    const solo = planSession(sentences(6), 600, 'pairs-and-blocks', null, 1);
+    const trio = planSession(sentences(6), 600, 'pairs-and-blocks', null, 3);
+    const five = planSession(sentences(6), 600, 'pairs-and-blocks', null, 5);
+    expect(trio.seconds).toBeGreaterThan(solo.seconds);
+    expect(five.seconds).toBeGreaterThan(trio.seconds);
+  });
+
+  it('con más personas caben menos oraciones en el mismo tiempo', () => {
+    const solo = planSession(sentences(30), 30, 'pairs-and-blocks', null, 1).suggested;
+    const five = planSession(sentences(30), 30, 'pairs-and-blocks', null, 5).suggested;
+    expect(five).toBeLessThan(solo);
+    expect(five).toBeGreaterThanOrEqual(1);
+  });
+
+  it('por defecto es una persona', () => {
+    expect(planSession(sentences(6), 600, 'minimal', null).seconds).toBe(
+      planSession(sentences(6), 600, 'minimal', null, 1).seconds,
+    );
+  });
+});

@@ -2,21 +2,23 @@ import type { LinkStrategy } from '@manducapp/core';
 import { useEffect, useId, useMemo } from 'react';
 import { Layout } from '../components/Layout';
 import type { MessageKey } from '../i18n';
+import { PEOPLE_OPTIONS } from '../services/group';
 import { BUDGET_OPTIONS_MINUTES, STRATEGIES, planSession } from '../services/plan';
 import { useApp } from '../state/AppContext';
 import { navigate } from '../useRoute';
 
 export function Preview() {
-  const { state, t, setBudget, setStrategy, setCount } = useApp();
+  const { state, t, setBudget, setStrategy, setCount, setPeople, setName } = useApp();
   const gospel = state.gospel;
   const budgetId = useId();
   const strategyId = useId();
   const rangeId = useId();
+  const peopleId = useId();
 
   const plan = useMemo(
     () =>
-      gospel ? planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count) : null,
-    [gospel, state.budgetMinutes, state.strategy, state.count],
+      gospel ? planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people) : null,
+    [gospel, state.budgetMinutes, state.strategy, state.count, state.people],
   );
 
   // Si se recarga la página directamente en esta ruta no hay texto elegido: se vuelve al inicio.
@@ -40,6 +42,16 @@ export function Preview() {
               {BUDGET_OPTIONS_MINUTES.map((minutes) => (
                 <option key={minutes} value={minutes}>
                   {t('plan.budgetOption', { minutes })}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor={peopleId}>{t('plan.people')}</label>
+            <select id={peopleId} value={state.people} onChange={(event) => setPeople(Number(event.target.value))}>
+              {PEOPLE_OPTIONS.map((people) => (
+                <option key={people} value={people}>
+                  {people}
                 </option>
               ))}
             </select>
@@ -77,6 +89,25 @@ export function Preview() {
         <p className={plan.fits ? 'estimate' : 'estimate over'} role="status">
           {t('plan.estimate', { minutes: plan.minutes })} · {plan.fits ? t('plan.fits') : t('plan.exceeds')}
         </p>
+        {state.people > 1 && (
+          <>
+            <p className="note">{t('group.note')}</p>
+            <details className="names">
+              <summary>{t('group.names')}</summary>
+              {Array.from({ length: state.people }, (_, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  maxLength={30}
+                  value={state.names[index] ?? ''}
+                  placeholder={t('group.person', { number: index + 1 })}
+                  aria-label={t('group.person', { number: index + 1 })}
+                  onChange={(event) => setName(index, event.target.value)}
+                />
+              ))}
+            </details>
+          </>
+        )}
         <div className="actions">
           <button onClick={() => navigate('session')} disabled={plan.count < 1}>
             {t('session.start')}
