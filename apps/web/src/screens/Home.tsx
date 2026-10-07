@@ -16,8 +16,6 @@ export function Home() {
 
   return (
     <Layout>
-      <PwaBanner />
-      <InstallBanner />
       <h1>{t('home.title')}</h1>
       <LanguagePicker />
 
@@ -59,6 +57,10 @@ export function Home() {
         <p>{t('home.footer')}</p>
         <a href="#/spike">{t('home.diagnostics')}</a>
       </footer>
+      <div className="toasts">
+        <PwaBanner />
+        <InstallBanner />
+      </div>
     </Layout>
   );
 }

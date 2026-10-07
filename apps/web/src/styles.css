@@ -53,6 +53,9 @@ body {
 }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-weight: 700;
   font-size: 1.1rem;
   color: var(--accent);
@@ -60,9 +63,12 @@ body {
 }
 
 .back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--accent);
   text-decoration: none;
-  padding: 8px 0 8px 12px;
+  padding: 0 0 0 12px;
 }
 
 h1 {
@@ -633,4 +639,79 @@ button.danger {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+}
+
+/* Accesibilidad */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* El encabezado solo recibe el foco por programa, al cambiar de pantalla: no necesita anillo. */
+h1:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button,
+select,
+input[type='text'] {
+  min-height: 44px;
+}
+
+.journal-link a,
+footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.stage.size-large {
+  font-size: 2rem;
+}
+
+.stage.size-xlarge {
+  font-size: 2.5rem;
+}
+
+.stage.hidden-text.size-large,
+.stage.hidden-text.size-xlarge {
+  font-size: 1.5rem;
+}
+
+/* Avisos de la app (versión nueva, instalar): flotan abajo para no empujar el contenido al aparecer. */
+.toasts {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px max(12px, env(safe-area-inset-bottom));
+  pointer-events: none;
+}
+
+.toasts .banner {
+  margin: 0;
+  pointer-events: auto;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
+}
+
+.toasts .banner p {
+  margin: 4px 0 10px;
 }

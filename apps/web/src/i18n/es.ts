@@ -84,6 +84,10 @@ export const es = {
   'session.auto': 'Avance automático',
   'session.voiceEvery': 'La voz lee en cada repetición',
   'session.speed': 'Velocidad de la voz',
+  'session.textSize': 'Tamaño del texto',
+  'size.normal': 'Normal',
+  'size.large': 'Grande',
+  'size.xlarge': 'Muy grande',
   'session.noVoice': 'Este navegador no tiene voz. La sesión sigue, leyendo el texto en pantalla.',
   'session.voiceError': 'La voz no respondió. Se puede seguir leyendo el texto en pantalla.',
   'session.interrupted':

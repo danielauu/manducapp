@@ -87,6 +87,10 @@ export const pl: Record<MessageKey, string> = {
   'session.auto': 'Automatyczne przechodzenie',
   'session.voiceEvery': 'Głos czyta każde powtórzenie',
   'session.speed': 'Szybkość głosu',
+  'session.textSize': 'Rozmiar tekstu',
+  'size.normal': 'Normalny',
+  'size.large': 'Duży',
+  'size.xlarge': 'Bardzo duży',
   'session.noVoice': 'Ta przeglądarka nie ma głosu. Sesja trwa dalej, tekst jest na ekranie.',
   'session.voiceError': 'Głos nie odpowiedział. Można czytać dalej tekst z ekranu.',
   'session.interrupted':

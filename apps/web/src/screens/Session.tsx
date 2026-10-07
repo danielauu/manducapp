@@ -2,7 +2,7 @@ import { buildSession, type SessionStep } from '@manducapp/core';
 import { useEffect, useId, useMemo, useState, type CSSProperties } from 'react';
 import { Layout } from '../components/Layout';
 import type { MessageKey } from '../i18n';
-import { RATE_OPTIONS, usePlayerSettings } from '../session/playerSettings';
+import { RATE_OPTIONS, TEXT_SIZES, usePlayerSettings } from '../session/playerSettings';
 import { useSessionPlayer } from '../session/useSessionPlayer';
 import { useWakeLock } from '../session/useWakeLock';
 import { displayName } from '../services/group';
@@ -78,6 +78,7 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
   const tts = useMemo(createWebSpeechTts, []);
   const rateId = useId();
   const paceId = useId();
+  const sizeId = useId();
   const [peeking, setPeeking] = useState(false);
 
   const player = useSessionPlayer({
@@ -115,6 +116,7 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
 
   return (
     <Layout back="preview">
+      <h1 className="sr-only">{gospel.reference}</h1>
       <div
         className="progress"
         role="progressbar"
@@ -142,9 +144,9 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
       )}
 
       {hidden ? (
-        <blockquote className="stage hidden-text">{t('session.textHidden')}</blockquote>
+        <blockquote className={`stage hidden-text size-${settings.textSize}`}>{t('session.textHidden')}</blockquote>
       ) : (
-        <blockquote className="stage" lang={app.lang}>
+        <blockquote className={`stage size-${settings.textSize}`} lang={app.lang}>
           {step.text}
         </blockquote>
       )}
@@ -215,6 +217,23 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
           />
           {t('session.hideFinal')}
         </label>
+        <div className="field">
+          <label htmlFor={sizeId}>{t('session.textSize')}</label>
+          <select
+            id={sizeId}
+            value={settings.textSize}
+            onChange={(event) => {
+              const textSize = TEXT_SIZES.find((candidate) => candidate === event.target.value);
+              if (textSize) updateSettings({ textSize });
+            }}
+          >
+            {TEXT_SIZES.map((size) => (
+              <option key={size} value={size}>
+                {t(`size.${size}` satisfies MessageKey)}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="field">
           <label htmlFor={paceId}>{t('plan.pace')}</label>
           <select

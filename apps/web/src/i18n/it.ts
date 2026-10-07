@@ -86,6 +86,10 @@ export const it: Record<MessageKey, string> = {
   'session.auto': 'Avanzamento automatico',
   'session.voiceEvery': 'La voce legge ogni ripetizione',
   'session.speed': 'Velocità della voce',
+  'session.textSize': 'Dimensione del testo',
+  'size.normal': 'Normale',
+  'size.large': 'Grande',
+  'size.xlarge': 'Molto grande',
   'session.noVoice': 'Questo browser non ha una voce. La sessione continua leggendo il testo sullo schermo.',
   'session.voiceError': 'La voce non ha risposto. Si può continuare leggendo il testo sullo schermo.',
   'session.interrupted':
