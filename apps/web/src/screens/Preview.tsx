@@ -77,11 +77,16 @@ export function Preview() {
         <p className={plan.fits ? 'estimate' : 'estimate over'} role="status">
           {t('plan.estimate', { minutes: plan.minutes })} · {plan.fits ? t('plan.fits') : t('plan.exceeds')}
         </p>
-        {plan.count !== plan.suggested && (
-          <button className="secondary" onClick={() => setCount(null)}>
-            {t('plan.fit')}
+        <div className="actions">
+          <button onClick={() => navigate('session')} disabled={plan.count < 1}>
+            {t('session.start')}
           </button>
-        )}
+          {plan.count !== plan.suggested && (
+            <button className="secondary" onClick={() => setCount(null)}>
+              {t('plan.fit')}
+            </button>
+          )}
+        </div>
       </section>
 
       <ol className="sentences" lang={gospel.lang}>
@@ -94,7 +99,6 @@ export function Preview() {
       {plan.count < plan.total && <p className="note">{t('plan.skipped')}: {plan.total - plan.count}</p>}
 
       {gospel.credit && <p className="credit">{t('preview.credit', { credit: gospel.credit })}</p>}
-      <p className="note">{t('preview.soon')}</p>
     </Layout>
   );
 }
