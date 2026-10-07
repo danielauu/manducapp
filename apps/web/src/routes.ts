@@ -1,6 +1,6 @@
-export type Route = 'home' | 'preview' | 'own' | 'spike';
+export type Route = 'home' | 'preview' | 'session' | 'own' | 'spike';
 
-const ROUTES: readonly Route[] = ['home', 'preview', 'own', 'spike'];
+const ROUTES: readonly Route[] = ['home', 'preview', 'session', 'own', 'spike'];
 
 /** La navegación va en el hash (`#/preview`), así el botón atrás de Android funciona sin servidor. */
 export function parseRoute(hash: string): Route {

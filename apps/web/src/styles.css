@@ -379,3 +379,116 @@ p.bad {
 .sentences li.skipped {
   opacity: 0.4;
 }
+
+.progress {
+  height: 6px;
+  margin: 4px 0 12px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
+}
+
+.stage {
+  margin: 12px 0 16px;
+  padding: 20px 18px;
+  font-size: 1.6rem;
+  line-height: 1.45;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 14px;
+}
+
+.phase {
+  margin: 8px 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.phase.turn {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.countdown {
+  height: 6px;
+  margin: 0 0 16px;
+  background: var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.countdown span {
+  display: block;
+  height: 100%;
+  background: var(--ok);
+  transform-origin: left;
+  animation: countdown var(--turn, 5s) linear forwards;
+}
+
+.countdown.paused span {
+  animation-play-state: paused;
+}
+
+@keyframes countdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.controls button {
+  flex: 1 1 0;
+  min-height: 48px;
+}
+
+.banner.soft {
+  border-color: var(--line);
+  background: var(--card);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.player-settings {
+  margin: 20px 0;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.player-settings summary {
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0;
+  font-size: 1rem;
+  color: var(--fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress span {
+    transition: none;
+  }
+}

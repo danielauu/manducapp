@@ -17,15 +17,26 @@ export const DEFAULT_RECITATION_FACTOR = 1.2;
 export const DEFAULT_GAP_SECONDS = 1;
 export const DEFAULT_BUDGET_SECONDS = 30 * 60;
 
+/** Lo que tarda la voz en leer el texto. */
+export function speechSeconds(text: string, options: TimingOptions = {}): number {
+  return wordCount(text) / (options.wordsPerSecond ?? DEFAULT_WORDS_PER_SECOND);
+}
+
+/** Lo que se le da a quien repite el texto en voz alta antes de pasar al siguiente paso. */
+export function recitationSeconds(text: string, options: TimingOptions = {}): number {
+  const factor = options.recitationFactor ?? DEFAULT_RECITATION_FACTOR;
+  return speechSeconds(text, options) * factor + (options.gapSeconds ?? DEFAULT_GAP_SECONDS);
+}
+
+/** ¿La voz lee este paso? Por defecto solo la primera repetición de cada oración nueva. */
+export function hasVoice(step: SessionStep, options: TimingOptions = {}): boolean {
+  return step.kind === 'learn' && (step.repetition === 1 || options.voiceOnEveryRepetition === true);
+}
+
 export function stepSeconds(step: SessionStep, options: TimingOptions = {}): number {
   if (step.kind === 'reflection') return 0;
-  const wordsPerSecond = options.wordsPerSecond ?? DEFAULT_WORDS_PER_SECOND;
-  const factor = options.recitationFactor ?? DEFAULT_RECITATION_FACTOR;
-  const gap = options.gapSeconds ?? DEFAULT_GAP_SECONDS;
-
-  const speech = wordCount(step.text) / wordsPerSecond;
-  const voice = step.kind === 'learn' && (step.repetition === 1 || options.voiceOnEveryRepetition) ? speech : 0;
-  return voice + speech * factor + gap;
+  const voice = hasVoice(step, options) ? speechSeconds(step.text, options) : 0;
+  return voice + recitationSeconds(step.text, options);
 }
 
 /** La reflexión final no cuenta: el presupuesto es para memorizar. */

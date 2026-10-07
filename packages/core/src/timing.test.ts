@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { buildSession } from './session';
-import { estimateSessionSeconds, fitToBudget, stepSeconds } from './timing';
+import { estimateSessionSeconds, fitToBudget, hasVoice, recitationSeconds, speechSeconds, stepSeconds } from './timing';
 import { wordCount } from './text';
 
 const words = (count: number) => Array.from({ length: count }, (_, index) => `w${index}`).join(' ');
@@ -87,5 +87,28 @@ describe('fitToBudget', () => {
 
   it('sin oraciones no hay nada que recortar', () => {
     expect(fitToBudget([])).toMatchObject({ count: 0, seconds: 0, fits: true });
+  });
+});
+
+describe('piezas del tiempo de un paso', () => {
+  it('voz y recitado salen de las palabras y de los parámetros', () => {
+    expect(speechSeconds(words(10))).toBeCloseTo(4, 5);
+    expect(recitationSeconds(words(10))).toBeCloseTo(4 * 1.2 + 1, 5);
+    expect(recitationSeconds(words(10), { recitationFactor: 2, gapSeconds: 0 })).toBeCloseTo(8, 5);
+  });
+
+  it('la voz lee solo la primera repetición de cada oración, salvo que se pida en todas', () => {
+    const learn = buildSession([words(10)]).filter((step) => step.kind === 'learn');
+    expect(learn.map((step) => hasVoice(step))).toEqual([true, false, false]);
+    expect(learn.map((step) => hasVoice(step, { voiceOnEveryRepetition: true }))).toEqual([true, true, true]);
+    const review = buildSession([words(10), words(10), words(10)]).find((step) => step.kind === 'link');
+    expect(review).toBeDefined();
+    expect(review && hasVoice(review, { voiceOnEveryRepetition: true })).toBe(false);
+  });
+
+  it('stepSeconds es la suma de ambas piezas', () => {
+    const [first, second] = buildSession([words(10)]);
+    expect(first && stepSeconds(first)).toBeCloseTo(speechSeconds(words(10)) + recitationSeconds(words(10)), 5);
+    expect(second && stepSeconds(second)).toBeCloseTo(recitationSeconds(words(10)), 5);
   });
 });
