@@ -1,4 +1,4 @@
-import { recitationSeconds, type Lang, type SessionStep } from '@manducapp/core';
+import { recitationSeconds, type Lang, type SessionStep, type TimingOptions } from '@manducapp/core';
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { TtsPort } from '../tts/port';
 import {
@@ -18,6 +18,8 @@ export interface PlayerOptions {
   voiceName?: string;
   autoAdvance: boolean;
   voiceEveryRepetition: boolean;
+  /** Ritmo de repetición; el contador del turno usa el mismo cálculo que la estimación. */
+  timing?: TimingOptions;
   tts: TtsPort;
 }
 
@@ -39,7 +41,7 @@ export interface SessionPlayer {
 }
 
 export function useSessionPlayer(options: PlayerOptions): SessionPlayer {
-  const { steps, lang, rate, voiceName, autoAdvance, voiceEveryRepetition, tts } = options;
+  const { steps, lang, rate, voiceName, autoAdvance, voiceEveryRepetition, timing, tts } = options;
   const config = useMemo<PlayerConfig>(
     () => ({ steps, voiceEveryRepetition, voiceAvailable: tts.available }),
     [steps, voiceEveryRepetition, tts.available],
@@ -53,7 +55,7 @@ export function useSessionPlayer(options: PlayerOptions): SessionPlayer {
   const [interrupted, setInterrupted] = useState(false);
 
   const step = steps[state.index];
-  const turnMs = step && state.phase === 'turn' ? recitationSeconds(step.text) * 1000 : 0;
+  const turnMs = step && state.phase === 'turn' ? recitationSeconds(step.text, timing) * 1000 : 0;
 
   // El idioma y la velocidad se leen al hablar; cambiarlos a mitad de una lectura no la reinicia.
   const speech = useRef({ lang, rate, voiceName });

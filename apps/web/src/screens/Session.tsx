@@ -6,6 +6,7 @@ import { RATE_OPTIONS, usePlayerSettings } from '../session/playerSettings';
 import { useSessionPlayer } from '../session/useSessionPlayer';
 import { useWakeLock } from '../session/useWakeLock';
 import { displayName } from '../services/group';
+import { PACES, timingFromSettings } from '../services/pace';
 import { planSession } from '../services/plan';
 import type { GospelView } from '../services/view';
 import { useApp } from '../state/AppContext';
@@ -39,6 +40,11 @@ function stepHeading(t: Translate, step: SessionStep, sentenceCount: number): st
 export function Session() {
   const { state } = useApp();
   const gospel = state.gospel;
+  const [player] = usePlayerSettings();
+  const timing = useMemo(
+    () => timingFromSettings({ pace: player.pace, voiceEveryRepetition: player.voiceEveryRepetition }),
+    [player.pace, player.voiceEveryRepetition],
+  );
 
   // Si se recarga la página directamente en esta ruta no hay texto elegido: se vuelve al inicio.
   useEffect(() => {
@@ -47,9 +53,9 @@ export function Session() {
 
   const memorized = useMemo(() => {
     if (!gospel) return [];
-    const plan = planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people);
+    const plan = planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people, timing);
     return gospel.sentences.slice(0, plan.count);
-  }, [gospel, state.budgetMinutes, state.strategy, state.count, state.people]);
+  }, [gospel, state.budgetMinutes, state.strategy, state.count, state.people, timing]);
   const steps = useMemo(
     () => buildSession(memorized, { strategy: state.strategy, people: state.people }),
     [memorized, state.strategy, state.people],
@@ -71,6 +77,7 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
   const [settings, updateSettings] = usePlayerSettings();
   const tts = useMemo(createWebSpeechTts, []);
   const rateId = useId();
+  const paceId = useId();
   const [peeking, setPeeking] = useState(false);
 
   const player = useSessionPlayer({
@@ -80,6 +87,7 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
     voiceName: settings.voices[app.lang],
     autoAdvance: settings.autoAdvance,
     voiceEveryRepetition: settings.voiceEveryRepetition,
+    timing: timingFromSettings({ pace: settings.pace, voiceEveryRepetition: settings.voiceEveryRepetition }),
     tts,
   });
   const { state, step } = player;
@@ -207,6 +215,23 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
           />
           {t('session.hideFinal')}
         </label>
+        <div className="field">
+          <label htmlFor={paceId}>{t('plan.pace')}</label>
+          <select
+            id={paceId}
+            value={settings.pace}
+            onChange={(event) => {
+              const pace = PACES.find((candidate) => candidate === event.target.value);
+              if (pace) updateSettings({ pace });
+            }}
+          >
+            {PACES.map((pace) => (
+              <option key={pace} value={pace}>
+                {t(`pace.${pace}` satisfies MessageKey)}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="field">
           <label htmlFor={rateId}>{t('session.speed')}</label>
           <select

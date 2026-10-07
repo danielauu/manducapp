@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { timingFromSettings } from './pace';
 import { planSession } from './plan';
 
 const sentences = (count: number) =>
@@ -72,6 +73,24 @@ describe('planSession en grupo', () => {
   it('por defecto es una persona', () => {
     expect(planSession(sentences(6), 600, 'minimal', null).seconds).toBe(
       planSession(sentences(6), 600, 'minimal', null, 1).seconds,
+    );
+  });
+});
+
+describe('planSession con el ritmo y la voz', () => {
+  it('un ritmo más rápido deja memorizar más oraciones en el mismo tiempo', () => {
+    const slow = planSession(sentences(30), 20, 'pairs-and-blocks', null, 3, timingFromSettings({ pace: 'slow', voiceEveryRepetition: false })).suggested;
+    const normal = planSession(sentences(30), 20, 'pairs-and-blocks', null, 3, timingFromSettings({ pace: 'normal', voiceEveryRepetition: false })).suggested;
+    const fast = planSession(sentences(30), 20, 'pairs-and-blocks', null, 3, timingFromSettings({ pace: 'fast', voiceEveryRepetition: false })).suggested;
+    expect(slow).toBeLessThan(normal);
+    expect(normal).toBeLessThan(fast);
+  });
+
+  it('sin tiempo explícito se comporta como el ritmo normal', () => {
+    const explicit = timingFromSettings({ pace: 'normal', voiceEveryRepetition: false });
+    expect(planSession(sentences(8), 600, 'minimal', null, 2).seconds).toBeCloseTo(
+      planSession(sentences(8), 600, 'minimal', null, 2, explicit).seconds,
+      5,
     );
   });
 });

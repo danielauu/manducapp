@@ -44,6 +44,10 @@ export const pl: Record<MessageKey, string> = {
   'plan.fit': 'Dopasuj do dostępnego czasu',
   'plan.skipped': 'Niezapamiętywane w tej sesji',
   'plan.people': 'Osoby',
+  'plan.pace': 'Tempo powtarzania',
+  'pace.slow': 'Wolniej',
+  'pace.normal': 'Normalnie',
+  'pace.fast': 'Szybciej',
   'group.names': 'Imiona (opcjonalnie)',
   'group.person': 'Osoba {number}',
   'group.note':

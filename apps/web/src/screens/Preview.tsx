@@ -3,6 +3,8 @@ import { useEffect, useId, useMemo } from 'react';
 import { Layout } from '../components/Layout';
 import type { MessageKey } from '../i18n';
 import { PEOPLE_OPTIONS } from '../services/group';
+import { PACES, timingFromSettings } from '../services/pace';
+import { usePlayerSettings } from '../session/playerSettings';
 import { BUDGET_OPTIONS_MINUTES, STRATEGIES, planSession } from '../services/plan';
 import { useApp } from '../state/AppContext';
 import { navigate } from '../useRoute';
@@ -14,11 +16,19 @@ export function Preview() {
   const strategyId = useId();
   const rangeId = useId();
   const peopleId = useId();
+  const paceId = useId();
+  const [player, updatePlayer] = usePlayerSettings();
+  const timing = useMemo(
+    () => timingFromSettings({ pace: player.pace, voiceEveryRepetition: player.voiceEveryRepetition }),
+    [player.pace, player.voiceEveryRepetition],
+  );
 
   const plan = useMemo(
     () =>
-      gospel ? planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people) : null,
-    [gospel, state.budgetMinutes, state.strategy, state.count, state.people],
+      gospel
+        ? planSession(gospel.sentences, state.budgetMinutes, state.strategy, state.count, state.people, timing)
+        : null,
+    [gospel, state.budgetMinutes, state.strategy, state.count, state.people, timing],
   );
 
   // Si se recarga la página directamente en esta ruta no hay texto elegido: se vuelve al inicio.
@@ -52,6 +62,26 @@ export function Preview() {
               {PEOPLE_OPTIONS.map((people) => (
                 <option key={people} value={people}>
                   {people}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label htmlFor={paceId}>{t('plan.pace')}</label>
+            <select
+              id={paceId}
+              value={player.pace}
+              onChange={(event) => {
+                const pace = PACES.find((candidate) => candidate === event.target.value);
+                if (pace) {
+                  updatePlayer({ pace });
+                  setCount(null);
+                }
+              }}
+            >
+              {PACES.map((pace) => (
+                <option key={pace} value={pace}>
+                  {t(`pace.${pace}` satisfies MessageKey)}
                 </option>
               ))}
             </select>
