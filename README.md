@@ -30,6 +30,12 @@ npm test
 
 Los scripts se ejecutan en todos los workspaces que los definan (`lint`, `typecheck`, `test`, `build`).
 
+```bash
+npm run dev -w @manducapp/web     # PWA en http://localhost:5173
+```
+
+La Fase 0 incluye una página de prueba técnica (voz del dispositivo y acceso al feed) que se publica en GitHub Pages: https://danielauu.github.io/manducapp/
+
 ## Textos bíblicos
 
 Los textos son propiedad de sus titulares (USCCB, AELF, CEI, Pallottinum, staeko.net, entre otros) y se obtienen en tiempo real desde el feed de [Evangelizo](https://feed.evangelizo.org/v2/reader.php) y la API de [AELF](https://api.aelf.org). **No se incluyen en este repositorio ni se versionan.** La app muestra siempre la línea de crédito que entrega la fuente.

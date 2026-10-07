@@ -5,5 +5,6 @@ export * from './feeds/evangelizo';
 export * from './feeds/http';
 export * from './segment';
 export * from './session';
+export { isWord, wordCount } from './text';
 export * from './timing';
 export * from './types';
