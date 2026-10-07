@@ -31,6 +31,11 @@ export const pl: Record<MessageKey, string> = {
   'pwa.update': 'Zaktualizuj',
   'pwa.offlineReady': 'Aplikacja działa już bez połączenia.',
   'pwa.dismiss': 'Zamknij',
+  'install.title': 'Zainstaluj aplikację',
+  'install.android': 'Zainstalować ją na ekranie głównym, aby otwierać jak aplikację i używać bez połączenia.',
+  'install.ios': 'Na iPhonie: dotknąć Udostępnij, a potem „Do ekranu początkowego”, aby otwierać jak aplikację.',
+  'install.button': 'Zainstaluj',
+  'install.dismiss': 'Nie teraz',
 
   'preview.title': 'Podgląd',
   'preview.sentences': 'Zdania: {count}',

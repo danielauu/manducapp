@@ -31,6 +31,11 @@ export const fr: Record<MessageKey, string> = {
   'pwa.update': 'Mettre à jour',
   'pwa.offlineReady': 'L’application est prête à fonctionner hors connexion.',
   'pwa.dismiss': 'Fermer',
+  'install.title': 'Installer l’application',
+  'install.android': 'L’installer sur l’écran d’accueil pour l’ouvrir comme une application et l’utiliser hors connexion.',
+  'install.ios': 'Sur iPhone : toucher Partager, puis « Sur l’écran d’accueil » pour l’ouvrir comme une application.',
+  'install.button': 'Installer',
+  'install.dismiss': 'Pas maintenant',
 
   'preview.title': 'Aperçu',
   'preview.sentences': 'Phrases : {count}',
