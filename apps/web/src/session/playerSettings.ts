@@ -1,5 +1,6 @@
 import { isLang } from '@manducapp/core';
 import { useCallback, useMemo, useState } from 'react';
+import { DEFAULT_PACE, PACES, type Pace } from '../services/pace';
 import { browserStorage } from '../services/storage';
 
 const KEY = 'manducapp:player';
@@ -14,6 +15,8 @@ export interface PlayerSettings {
   /** En el recitado final el texto se oculta, para decirlo de memoria; se puede mostrar al tocar. */
   hideFinalText: boolean;
   rate: number;
+  /** Qué tan rápido repite quien reza; cambia la estimación de tiempo y el contador. */
+  pace: Pace;
   /** Voz elegida para cada idioma (nombre de la voz del dispositivo); sin entrada, la predeterminada. */
   voices: Record<string, string>;
 }
@@ -23,6 +26,7 @@ export const DEFAULT_PLAYER_SETTINGS: PlayerSettings = {
   voiceEveryRepetition: false,
   hideFinalText: true,
   rate: 1,
+  pace: DEFAULT_PACE,
   voices: {},
 };
 
@@ -44,7 +48,7 @@ export function parsePlayerSettings(raw: string | null): PlayerSettings {
   try {
     const parsed: unknown = JSON.parse(raw ?? '{}');
     if (typeof parsed !== 'object' || parsed === null) return DEFAULT_PLAYER_SETTINGS;
-    const { autoAdvance, voiceEveryRepetition, hideFinalText, rate, voices } = parsed as Record<string, unknown>;
+    const { autoAdvance, voiceEveryRepetition, hideFinalText, rate, pace, voices } = parsed as Record<string, unknown>;
     return {
       autoAdvance: typeof autoAdvance === 'boolean' ? autoAdvance : DEFAULT_PLAYER_SETTINGS.autoAdvance,
       voiceEveryRepetition:
@@ -57,6 +61,7 @@ export function parsePlayerSettings(raw: string | null): PlayerSettings {
         typeof rate === 'number' && (RATE_OPTIONS as readonly number[]).includes(rate)
           ? rate
           : DEFAULT_PLAYER_SETTINGS.rate,
+      pace: PACES.find((candidate) => candidate === pace) ?? DEFAULT_PACE,
       voices: parseVoices(voices),
     };
   } catch {

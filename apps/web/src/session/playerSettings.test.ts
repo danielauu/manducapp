@@ -9,6 +9,7 @@ describe('parsePlayerSettings', () => {
       voiceEveryRepetition: false,
       hideFinalText: true,
       rate: 1,
+      pace: 'normal',
       voices: {},
     });
   });
@@ -16,7 +17,14 @@ describe('parsePlayerSettings', () => {
   it('acepta valores válidos', () => {
     expect(
       parsePlayerSettings('{"autoAdvance":false,"voiceEveryRepetition":true,"hideFinalText":false,"rate":0.8}'),
-    ).toEqual({ autoAdvance: false, voiceEveryRepetition: true, hideFinalText: false, rate: 0.8, voices: {} });
+    ).toEqual({
+      autoAdvance: false,
+      voiceEveryRepetition: true,
+      hideFinalText: false,
+      rate: 0.8,
+      pace: 'normal',
+      voices: {},
+    });
   });
 
   it('descarta lo inválido campo por campo y no se rompe con basura', () => {
@@ -25,6 +33,7 @@ describe('parsePlayerSettings', () => {
       voiceEveryRepetition: true,
       hideFinalText: true,
       rate: 1,
+      pace: 'normal',
       voices: {},
     });
     expect(parsePlayerSettings('no es json')).toEqual(DEFAULT_PLAYER_SETTINGS);
@@ -43,5 +52,15 @@ describe('voz elegida por idioma', () => {
     expect(parsePlayerSettings('{"voices":["es"]}').voices).toEqual({});
     expect(parsePlayerSettings('{"voices":"es"}').voices).toEqual({});
     expect(parsePlayerSettings('{"voices":null}').voices).toEqual({});
+  });
+});
+
+describe('ritmo de repetición', () => {
+  it('acepta los tres ritmos y descarta cualquier otro valor', () => {
+    expect(parsePlayerSettings('{"pace":"slow"}').pace).toBe('slow');
+    expect(parsePlayerSettings('{"pace":"fast"}').pace).toBe('fast');
+    expect(parsePlayerSettings('{"pace":"turbo"}').pace).toBe('normal');
+    expect(parsePlayerSettings('{"pace":3}').pace).toBe('normal');
+    expect(parsePlayerSettings('{}').pace).toBe('normal');
   });
 });

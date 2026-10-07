@@ -3,6 +3,7 @@ import {
   estimateSessionSeconds,
   fitToBudget,
   type LinkStrategy,
+  type TimingOptions,
 } from '@manducapp/core';
 
 export const BUDGET_OPTIONS_MINUTES = [10, 15, 20, 30, 45, 60] as const;
@@ -30,12 +31,13 @@ export function planSession(
   strategy: LinkStrategy,
   chosenCount: number | null,
   people = 1,
+  timing: TimingOptions = {},
 ): Plan {
   const total = sentences.length;
   const options = { strategy, people };
-  const suggested = fitToBudget(sentences, budgetMinutes * 60, options).count;
+  const suggested = fitToBudget(sentences, budgetMinutes * 60, options, timing).count;
   const count = Math.min(Math.max(chosenCount ?? suggested, Math.min(1, total)), total);
-  const seconds = estimateSessionSeconds(buildSession(sentences.slice(0, count), options));
+  const seconds = estimateSessionSeconds(buildSession(sentences.slice(0, count), options), timing);
   return {
     total,
     suggested,
