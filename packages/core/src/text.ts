@@ -36,6 +36,15 @@ export function collapseSpaces(input: string): string {
   return input.replace(/[\s\u00a0]+/g, ' ').trim();
 }
 
+/** Un token cuenta como palabra si tiene al menos una letra o un número (no `:`, `«`, `–`). */
+export function isWord(token: string): boolean {
+  return /[\p{L}\p{N}]/u.test(token);
+}
+
+export function wordCount(text: string): number {
+  return text.split(/\s+/).filter(isWord).length;
+}
+
 export function htmlToText(input: string): string {
   return collapseSpaces(decodeEntities(stripTags(input)));
 }
