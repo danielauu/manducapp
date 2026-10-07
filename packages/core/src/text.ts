@@ -45,6 +45,15 @@ export function wordCount(text: string): number {
   return text.split(/\s+/).filter(isWord).length;
 }
 
+/**
+ * Parte un texto en frases: cierra en `. ! ? …` con comillas opcionales y exige un espacio o el fin
+ * del texto después. No usa lookbehind: Safari anterior a 16.4 no compila el script entero si lo ve.
+ */
+export function splitSentences(text: string): string[] {
+  const pieces = text.match(/.+?(?:[.!?…]+(?:\s?[»”’'"])*(?=\s|$)|$)/g) ?? [];
+  return pieces.map(collapseSpaces).filter((piece) => piece.length > 0);
+}
+
 export function htmlToText(input: string): string {
   return collapseSpaces(decodeEntities(stripTags(input)));
 }

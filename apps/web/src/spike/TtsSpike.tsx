@@ -1,7 +1,8 @@
 import { LANGS, type Lang } from '@manducapp/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { copyText, describeEnvironment, sleep } from './env';
-import { LANG_NAMES, LANG_TAGS, SAMPLES } from './samples';
+import { LANG_NAMES } from '../i18n';
+import { LANG_TAGS, SAMPLES } from './samples';
 import { estimateSpeechMs, groupVoicesByLang } from './voices';
 
 interface LogEntry {
