@@ -4,7 +4,23 @@ Herramienta sin fines de lucro para rezar el evangelio por **manducación**: se 
 
 Funciona en iPhone y Android como PWA (después, también en las tiendas), en español, inglés, francés, italiano, alemán y polaco.
 
-> Estado: **Fase 0** (arranque del repositorio). El plan completo está en [docs/plan-v1.md](docs/plan-v1.md).
+## Probarla
+
+La app está publicada en **https://danielauu.github.io/manducapp/**. En el teléfono se puede instalar en la pantalla de inicio (Android: Chrome, menú ⋮, «Instalar aplicación»).
+
+## Estado
+
+El plan completo está en [docs/plan-v1.md](docs/plan-v1.md) y el avance, en los [hitos](https://github.com/danielauu/manducapp/milestones) del repositorio.
+
+| Fase | Estado |
+|---|---|
+| 0. Arranque y pruebas de riesgo | Hecha. Falta solo la prueba en iPhone, que se pospuso a propósito |
+| 1. Núcleo y backend | Núcleo y Worker listos; falta desplegar el Worker (necesita cuenta de Cloudflare) |
+| 2. MVP para una persona | Hecha: evangelio de hoy, del domingo o texto propio, recorte por tiempo, voz, repeticiones, uniones, recitado final y reflexión |
+| 3. Modo grupo (1 a 5 personas) | Hecha |
+| 4. Diario de meditaciones y los 6 idiomas de la interfaz | Pendiente |
+| 5. PWA endurecida y piloto | Pendiente |
+| 6. Tiendas | Pendiente |
 
 ## Principio rector
 
