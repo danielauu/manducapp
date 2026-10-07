@@ -22,7 +22,7 @@ describe('diccionarios', () => {
 describe('translate', () => {
   it('interpola parámetros y deja intacto el marcador que no recibe valor', () => {
     expect(translate('es', 'preview.sentences', { count: 17 })).toBe('Oraciones: 17');
-    expect(translate('en', 'preview.minutes', { minutes: 22 })).toBe('Estimated time: about 22 min (one person)');
+    expect(translate('en', 'plan.estimate', { minutes: 22 })).toBe('Estimated time: about 22 min');
     expect(translate('es', 'preview.credit')).toBe('Traducción: {credit}');
   });
 });

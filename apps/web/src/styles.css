@@ -346,3 +346,36 @@ p.bad {
   list-style: none;
   padding: 0;
 }
+
+.plan {
+  margin: 0 0 20px;
+}
+
+.plan-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.plan .field {
+  margin: 0 0 12px;
+}
+
+.plan input[type='range'] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.estimate {
+  margin: 4px 0 12px;
+  font-weight: 600;
+  color: var(--ok);
+}
+
+.estimate.over {
+  color: var(--bad);
+}
+
+.sentences li.skipped {
+  opacity: 0.4;
+}
