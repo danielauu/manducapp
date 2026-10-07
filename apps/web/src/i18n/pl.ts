@@ -123,6 +123,13 @@ export const pl: Record<MessageKey, string> = {
 
   'settings.title': 'Ustawienia',
   'settings.uiLanguage': 'Język aplikacji',
+  'settings.voice': 'Głos',
+  'settings.voiceDefault': 'Domyślny dla urządzenia',
+  'settings.voiceNetwork': 'wymaga połączenia',
+  'settings.voiceTest': 'Wypróbuj głos',
+  'settings.voiceLoading': 'Szukanie głosów…',
+  'settings.noVoices': 'Na tym urządzeniu nie ma głosów dla tego języka. Można je zainstalować w ustawieniach syntezy mowy systemu.',
+  'settings.voiceHint': 'Głosy zależą od urządzenia i przeglądarki.',
 
   'own.title': 'Mój własny tekst',
   'own.language': 'Język tekstu',

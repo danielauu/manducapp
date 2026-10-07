@@ -120,6 +120,13 @@ export const es = {
 
   'settings.title': 'Ajustes',
   'settings.uiLanguage': 'Idioma de la aplicación',
+  'settings.voice': 'Voz',
+  'settings.voiceDefault': 'Predeterminada del dispositivo',
+  'settings.voiceNetwork': 'requiere conexión',
+  'settings.voiceTest': 'Probar la voz',
+  'settings.voiceLoading': 'Buscando voces…',
+  'settings.noVoices': 'No hay voces para este idioma en el dispositivo. Se pueden instalar en los ajustes de texto a voz del sistema.',
+  'settings.voiceHint': 'Las voces dependen del dispositivo y del navegador.',
 
   'own.title': 'Mi propio texto',
   'own.language': 'Idioma del texto',

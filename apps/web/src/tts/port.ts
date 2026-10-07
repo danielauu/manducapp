@@ -1,4 +1,5 @@
 import type { Lang } from '@manducapp/core';
+import type { VoiceOption } from './voices';
 
 export type SpeakOutcome = 'end' | 'cancelled' | 'error';
 
@@ -6,6 +7,8 @@ export interface SpeakOptions {
   lang: Lang;
   /** 1 es la velocidad normal. */
   rate?: number;
+  /** Nombre de una voz concreta del dispositivo; sin él se usa la predeterminada del idioma. */
+  voiceName?: string;
 }
 
 /**
@@ -18,4 +21,6 @@ export interface TtsPort {
   /** Lee el texto y termina cuando acaba, lo interrumpen o falla. */
   speak(text: string, options: SpeakOptions): Promise<SpeakOutcome>;
   cancel(): void;
+  /** Voces del dispositivo para un idioma, con las locales primero. Puede tardar un instante en cargar. */
+  voices(lang: Lang): Promise<VoiceOption[]>;
 }

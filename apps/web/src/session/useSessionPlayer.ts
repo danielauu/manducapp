@@ -14,6 +14,8 @@ export interface PlayerOptions {
   steps: readonly SessionStep[];
   lang: Lang;
   rate: number;
+  /** Voz elegida para este idioma; sin ella, la predeterminada. */
+  voiceName?: string;
   autoAdvance: boolean;
   voiceEveryRepetition: boolean;
   tts: TtsPort;
@@ -37,7 +39,7 @@ export interface SessionPlayer {
 }
 
 export function useSessionPlayer(options: PlayerOptions): SessionPlayer {
-  const { steps, lang, rate, autoAdvance, voiceEveryRepetition, tts } = options;
+  const { steps, lang, rate, voiceName, autoAdvance, voiceEveryRepetition, tts } = options;
   const config = useMemo<PlayerConfig>(
     () => ({ steps, voiceEveryRepetition, voiceAvailable: tts.available }),
     [steps, voiceEveryRepetition, tts.available],
@@ -54,10 +56,10 @@ export function useSessionPlayer(options: PlayerOptions): SessionPlayer {
   const turnMs = step && state.phase === 'turn' ? recitationSeconds(step.text) * 1000 : 0;
 
   // El idioma y la velocidad se leen al hablar; cambiarlos a mitad de una lectura no la reinicia.
-  const speech = useRef({ lang, rate });
+  const speech = useRef({ lang, rate, voiceName });
   useEffect(() => {
-    speech.current = { lang, rate };
-  }, [lang, rate]);
+    speech.current = { lang, rate, voiceName };
+  }, [lang, rate, voiceName]);
 
   // Fase de voz: lee el texto del paso y, al terminar, le da el turno a quien reza.
   useEffect(() => {

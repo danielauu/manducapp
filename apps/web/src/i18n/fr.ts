@@ -124,6 +124,13 @@ export const fr: Record<MessageKey, string> = {
 
   'settings.title': 'Réglages',
   'settings.uiLanguage': 'Langue de l’application',
+  'settings.voice': 'Voix',
+  'settings.voiceDefault': 'Par défaut de l’appareil',
+  'settings.voiceNetwork': 'nécessite une connexion',
+  'settings.voiceTest': 'Tester la voix',
+  'settings.voiceLoading': 'Recherche des voix…',
+  'settings.noVoices': 'Aucune voix pour cette langue sur cet appareil. On peut en installer dans les réglages de synthèse vocale du système.',
+  'settings.voiceHint': 'Les voix dépendent de l’appareil et du navigateur.',
 
   'own.title': 'Mon propre texte',
   'own.language': 'Langue du texte',

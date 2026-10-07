@@ -3,8 +3,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { copyText, describeEnvironment, sleep } from './env';
 import { LANG_NAMES } from '../i18n';
 import { LANG_TAGS } from '../tts/langTags';
-import { SAMPLES } from './samples';
-import { estimateSpeechMs, groupVoicesByLang } from './voices';
+import { SAMPLES } from '../tts/samples';
+import { groupVoicesByLang } from '../tts/voices';
+import { estimateSpeechMs } from './voices';
 
 interface LogEntry {
   at: number;

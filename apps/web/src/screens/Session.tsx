@@ -77,6 +77,7 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
     steps,
     lang: app.lang,
     rate: settings.rate,
+    voiceName: settings.voices[app.lang],
     autoAdvance: settings.autoAdvance,
     voiceEveryRepetition: settings.voiceEveryRepetition,
     tts,

@@ -119,6 +119,13 @@ export const en: Record<MessageKey, string> = {
 
   'settings.title': 'Settings',
   'settings.uiLanguage': 'App language',
+  'settings.voice': 'Voice',
+  'settings.voiceDefault': 'Device default',
+  'settings.voiceNetwork': 'needs a connection',
+  'settings.voiceTest': 'Test the voice',
+  'settings.voiceLoading': 'Looking for voices…',
+  'settings.noVoices': 'There are no voices for this language on this device. You can install some in the system text-to-speech settings.',
+  'settings.voiceHint': 'Voices depend on the device and the browser.',
 
   'own.title': 'My own text',
   'own.language': 'Text language',
