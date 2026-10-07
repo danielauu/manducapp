@@ -3,4 +3,5 @@ export * from './errors';
 export * from './feeds/aelf';
 export * from './feeds/evangelizo';
 export * from './feeds/http';
+export * from './segment';
 export * from './types';
