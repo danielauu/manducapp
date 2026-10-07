@@ -1,4 +1,4 @@
-import { collapseSpaces } from './text';
+import { collapseSpaces, isWord } from './text';
 import type { Lang } from './types';
 
 export const DEFAULT_MAX_WORDS = 22;
@@ -33,10 +33,6 @@ const CLOSERS = `"'»”’)`;
 
 /** Signos que algunos idiomas separan por un espacio de la palabra anterior (« texto. », « : »). */
 const DETACHED_PUNCTUATION = /^[»”’"')\]:;,.!?…]+$/;
-
-function isWord(token: string): boolean {
-  return /[\p{L}\p{N}]/u.test(token);
-}
 
 function countWords(tokens: readonly string[]): number {
   return tokens.filter(isWord).length;
