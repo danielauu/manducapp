@@ -3,5 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Lógica pura de Manducapp: tipos, parsers de feed, segmentación, tiempos y motor de sesión."
+  "description": "Lógica pura de Manducapp: tipos, parsers de feed, segmentación, tiempos y motor de sesión.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p .",
+    "test": "vitest run --passWithNoTests"
+  }
 }
