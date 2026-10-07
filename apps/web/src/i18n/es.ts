@@ -29,6 +29,11 @@ export const es = {
   'pwa.update': 'Actualizar',
   'pwa.offlineReady': 'La app ya está lista para usarse sin conexión.',
   'pwa.dismiss': 'Cerrar',
+  'install.title': 'Instalar la app',
+  'install.android': 'Instalarla en la pantalla de inicio para abrirla como una app y usarla sin conexión.',
+  'install.ios': 'En iPhone: tocar Compartir y luego «Añadir a pantalla de inicio» para abrirla como una app.',
+  'install.button': 'Instalar',
+  'install.dismiss': 'Ahora no',
 
   'preview.title': 'Vista previa',
   'preview.sentences': 'Oraciones: {count}',

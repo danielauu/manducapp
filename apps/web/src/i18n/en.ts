@@ -30,6 +30,11 @@ export const en: Record<MessageKey, string> = {
   'pwa.update': 'Update',
   'pwa.offlineReady': 'The app is now ready to work offline.',
   'pwa.dismiss': 'Dismiss',
+  'install.title': 'Install the app',
+  'install.android': 'Install it on the home screen to open it like an app and use it offline.',
+  'install.ios': 'On iPhone: tap Share, then "Add to Home Screen" to open it like an app.',
+  'install.button': 'Install',
+  'install.dismiss': 'Not now',
 
   'preview.title': 'Preview',
   'preview.sentences': 'Sentences: {count}',

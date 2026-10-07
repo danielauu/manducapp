@@ -31,6 +31,11 @@ export const de: Record<MessageKey, string> = {
   'pwa.update': 'Aktualisieren',
   'pwa.offlineReady': 'Die App funktioniert jetzt auch ohne Verbindung.',
   'pwa.dismiss': 'Schließen',
+  'install.title': 'App installieren',
+  'install.android': 'Auf dem Startbildschirm installieren, um sie wie eine App zu öffnen und ohne Verbindung zu nutzen.',
+  'install.ios': 'Auf dem iPhone: Teilen antippen und dann „Zum Home-Bildschirm“, um sie wie eine App zu öffnen.',
+  'install.button': 'Installieren',
+  'install.dismiss': 'Nicht jetzt',
 
   'preview.title': 'Vorschau',
   'preview.sentences': 'Sätze: {count}',
