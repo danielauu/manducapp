@@ -1,6 +1,6 @@
 import { FeedError, isLang, nextSunday, todayIso, type Lang, type LinkStrategy } from '@manducapp/core';
 import { createContext, useCallback, useContext, useEffect, useMemo, useReducer, type ReactNode } from 'react';
-import { detectReadingLang, detectUiLang, translate, type MessageKey } from '../i18n';
+import { detectLang, translate, type MessageKey } from '../i18n';
 import { getGospel } from '../services/gospel';
 import { BUDGET_OPTIONS_MINUTES, DEFAULT_BUDGET_MINUTES, DEFAULT_STRATEGY, STRATEGIES } from '../services/plan';
 import { browserStorage, type KeyValueStorage } from '../services/storage';
@@ -13,6 +13,7 @@ const SETTINGS_KEY = 'manducapp:settings';
 
 interface Settings {
   lang?: Lang;
+  uiLang?: Lang;
   budgetMinutes?: number;
   strategy?: LinkStrategy;
   people?: number;
@@ -24,9 +25,10 @@ function readSettings(storage: KeyValueStorage): Settings {
   try {
     const parsed: unknown = JSON.parse(storage.getItem(SETTINGS_KEY) ?? '{}');
     if (typeof parsed !== 'object' || parsed === null) return {};
-    const { lang, budgetMinutes, strategy, people, names } = parsed as Record<string, unknown>;
+    const { lang, uiLang, budgetMinutes, strategy, people, names } = parsed as Record<string, unknown>;
     const settings: Settings = {};
     if (isLang(lang)) settings.lang = lang;
+    if (isLang(uiLang)) settings.uiLang = uiLang;
     if (typeof budgetMinutes === 'number' && (BUDGET_OPTIONS_MINUTES as readonly number[]).includes(budgetMinutes)) {
       settings.budgetMinutes = budgetMinutes;
     }
@@ -51,6 +53,7 @@ interface AppApi {
   state: AppState;
   t: (key: MessageKey, params?: Record<string, string | number>) => string;
   setLang: (lang: Lang) => void;
+  setUiLang: (uiLang: Lang) => void;
   openGospel: (kind: 'today' | 'sunday') => Promise<void>;
   retry: () => Promise<void>;
   submitOwnText: (text: string) => void;
@@ -69,8 +72,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     const languages = navigator.languages.length > 0 ? navigator.languages : [navigator.language];
     const saved = readSettings(storage);
     return {
-      lang: saved.lang ?? detectReadingLang(languages),
-      uiLang: detectUiLang(languages),
+      lang: saved.lang ?? detectLang(languages),
+      uiLang: saved.uiLang ?? detectLang(languages),
       gospel: null,
       loading: false,
       error: null,
@@ -86,13 +89,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const settings: Settings = {
       lang: state.lang,
+      uiLang: state.uiLang,
       budgetMinutes: state.budgetMinutes,
       strategy: state.strategy,
       people: state.people,
       names: state.names,
     };
     storage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  }, [storage, state.lang, state.budgetMinutes, state.strategy, state.people, state.names]);
+  }, [storage, state.lang, state.uiLang, state.budgetMinutes, state.strategy, state.people, state.names]);
 
   useEffect(() => {
     document.documentElement.lang = state.uiLang;
@@ -102,6 +106,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const t = useCallback<AppApi['t']>((key, params) => translate(uiLang, key, params), [uiLang]);
 
   const setLang = useCallback((lang: Lang) => dispatch({ type: 'setLang', lang }), []);
+  const setUiLang = useCallback((uiLang: Lang) => dispatch({ type: 'setUiLang', uiLang }), []);
   const setBudget = useCallback((minutes: number) => dispatch({ type: 'setBudget', minutes }), []);
   const setStrategy = useCallback((strategy: LinkStrategy) => dispatch({ type: 'setStrategy', strategy }), []);
   const setCount = useCallback((count: number | null) => dispatch({ type: 'setCount', count }), []);
@@ -140,6 +145,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       state,
       t,
       setLang,
+      setUiLang,
       openGospel,
       retry,
       submitOwnText,
@@ -149,7 +155,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
       setPeople,
       setName,
     }),
-    [state, t, setLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount, setPeople, setName],
+    [state, t, setLang, setUiLang, openGospel, retry, submitOwnText, setBudget, setStrategy, setCount, setPeople, setName],
   );
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }

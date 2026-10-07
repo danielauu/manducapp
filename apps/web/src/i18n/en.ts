@@ -14,6 +14,7 @@ export const en: Record<MessageKey, string> = {
     'Gospel texts belong to their rights holders. They are requested live and only stored on this device.',
   'home.diagnostics': 'Technical tests',
   'home.journal': 'My meditations',
+  'home.settings': 'Settings',
 
   'error.title': 'The Gospel could not be loaded',
   'error.network': 'Cannot reach the service. Check your internet connection and try again.',
@@ -94,8 +95,7 @@ export const en: Record<MessageKey, string> = {
   'reflection.finishNoSave': 'Finish without saving',
   'reflection.private': 'It is saved only on this device.',
   'reflection.saved': 'Meditation saved',
-  'reflection.savedText':
-    'It was saved on this device. The journal with all your meditations arrives in an upcoming step.',
+  'reflection.savedText': 'It was saved on this device. You can find it in "My meditations".',
   'reflection.home': 'Back to the start',
 
   'journal.title': 'My meditations',
@@ -116,6 +116,9 @@ export const en: Record<MessageKey, string> = {
   'journal.cancel': 'Cancel',
   'journal.save': 'Save changes',
   'journal.backToList': 'Back to the list',
+
+  'settings.title': 'Settings',
+  'settings.uiLanguage': 'App language',
 
   'own.title': 'My own text',
   'own.language': 'Text language',

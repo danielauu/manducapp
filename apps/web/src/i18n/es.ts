@@ -13,6 +13,7 @@ export const es = {
     'Los textos del evangelio pertenecen a sus titulares. Se piden en tiempo real y solo se guardan en este dispositivo.',
   'home.diagnostics': 'Pruebas técnicas',
   'home.journal': 'Mis meditaciones',
+  'home.settings': 'Ajustes',
 
   'error.title': 'No se pudo cargar el evangelio',
   'error.network': 'No hay conexión con el servicio. Revisar la conexión a internet e intentar de nuevo.',
@@ -94,8 +95,7 @@ export const es = {
   'reflection.finishNoSave': 'Terminar sin guardar',
   'reflection.private': 'Se guarda solo en este dispositivo.',
   'reflection.saved': 'Meditación guardada',
-  'reflection.savedText':
-    'Quedó guardada en este dispositivo. El diario con todas las meditaciones llega en un próximo paso.',
+  'reflection.savedText': 'Quedó guardada en este dispositivo. Se encuentra en «Mis meditaciones».',
   'reflection.home': 'Volver al inicio',
 
   'journal.title': 'Mis meditaciones',
@@ -117,6 +117,9 @@ export const es = {
   'journal.cancel': 'Cancelar',
   'journal.save': 'Guardar cambios',
   'journal.backToList': 'Volver a la lista',
+
+  'settings.title': 'Ajustes',
+  'settings.uiLanguage': 'Idioma de la aplicación',
 
   'own.title': 'Mi propio texto',
   'own.language': 'Idioma del texto',
