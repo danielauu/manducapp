@@ -25,6 +25,10 @@ export const es = {
 
   'common.retry': 'Reintentar',
   'common.back': 'Volver',
+  'pwa.updateAvailable': 'Hay una versión nueva de la app.',
+  'pwa.update': 'Actualizar',
+  'pwa.offlineReady': 'La app ya está lista para usarse sin conexión.',
+  'pwa.dismiss': 'Cerrar',
 
   'preview.title': 'Vista previa',
   'preview.sentences': 'Oraciones: {count}',

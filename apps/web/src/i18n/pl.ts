@@ -27,6 +27,10 @@ export const pl: Record<MessageKey, string> = {
 
   'common.retry': 'Spróbuj ponownie',
   'common.back': 'Wstecz',
+  'pwa.updateAvailable': 'Dostępna jest nowa wersja aplikacji.',
+  'pwa.update': 'Zaktualizuj',
+  'pwa.offlineReady': 'Aplikacja działa już bez połączenia.',
+  'pwa.dismiss': 'Zamknij',
 
   'preview.title': 'Podgląd',
   'preview.sentences': 'Zdania: {count}',

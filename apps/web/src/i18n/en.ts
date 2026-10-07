@@ -26,6 +26,10 @@ export const en: Record<MessageKey, string> = {
 
   'common.retry': 'Try again',
   'common.back': 'Back',
+  'pwa.updateAvailable': 'A new version of the app is available.',
+  'pwa.update': 'Update',
+  'pwa.offlineReady': 'The app is now ready to work offline.',
+  'pwa.dismiss': 'Dismiss',
 
   'preview.title': 'Preview',
   'preview.sentences': 'Sentences: {count}',
