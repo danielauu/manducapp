@@ -492,3 +492,23 @@ p.bad {
     transition: none;
   }
 }
+
+.stage.hidden-text {
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--muted);
+  border-left-color: var(--line);
+}
+
+.peek {
+  margin: 0 0 8px;
+}
+
+.countdown.calm span {
+  background: var(--accent);
+  animation-duration: 60s;
+}
+
+textarea[aria-label] {
+  min-height: 12rem;
+}

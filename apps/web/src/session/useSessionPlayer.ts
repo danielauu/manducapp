@@ -78,10 +78,11 @@ export function useSessionPlayer(options: PlayerOptions): SessionPlayer {
 
   // Fase de turno: con avance automático pasa solo al siguiente paso cuando se acaba el tiempo.
   useEffect(() => {
-    if (state.paused || state.phase !== 'turn' || !autoAdvance) return;
+    // El recitado final no avanza solo: quien reza decide cuándo terminó.
+    if (state.paused || state.phase !== 'turn' || !autoAdvance || step?.kind === 'final') return;
     const timer = window.setTimeout(() => dispatch({ type: 'next' }), turnMs);
     return () => window.clearTimeout(timer);
-  }, [state.index, state.phase, state.paused, state.nonce, autoAdvance, turnMs]);
+  }, [state.index, state.phase, state.paused, state.nonce, autoAdvance, turnMs, step]);
 
   // ADR-0002: si la página pasa a segundo plano, la sesión se pausa y se avisa al volver.
   useEffect(() => {
