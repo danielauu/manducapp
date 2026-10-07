@@ -18,7 +18,7 @@ El plan completo está en [docs/plan-v1.md](docs/plan-v1.md) y el avance, en los
 | 1. Núcleo y backend | Núcleo y Worker listos; falta desplegar el Worker (necesita cuenta de Cloudflare) |
 | 2. MVP para una persona | Hecha: evangelio de hoy, del domingo o texto propio, recorte por tiempo, voz, repeticiones, uniones, recitado final y reflexión |
 | 3. Modo grupo (1 a 5 personas) | Hecha |
-| 4. Diario de meditaciones y los 6 idiomas de la interfaz | Pendiente |
+| 4. Diario de meditaciones, los 6 idiomas de la interfaz y elección de voz | Hecha. Las traducciones al francés, italiano, alemán y polaco esperan la revisión de hablantes nativos |
 | 5. PWA endurecida y piloto | Pendiente |
 | 6. Tiendas | Pendiente |
 
