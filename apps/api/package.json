@@ -1,0 +1,7 @@
+{
+  "name": "@manducapp/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker sin estado que normaliza el evangelio del día a un JSON único."
+}

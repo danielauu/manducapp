@@ -1,0 +1,7 @@
+{
+  "name": "@manducapp/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lógica pura de Manducapp: tipos, parsers de feed, segmentación, tiempos y motor de sesión."
+}
