@@ -1,5 +1,5 @@
 export const MAX_PEOPLE = 5;
-export const DEFAULT_REPS_PER_PERSON = 3;
+export const DEFAULT_MIN_REPETITIONS = 3;
 export const DEFAULT_BLOCK_SIZE = 4;
 
 export type StepKind = 'learn' | 'link' | 'block' | 'final' | 'reflection';
@@ -15,8 +15,11 @@ export type LinkStrategy = 'pairs-and-blocks' | 'cumulative' | 'minimal';
 export interface SessionOptions {
   /** Personas que rezan juntas, de 1 a 5. */
   people?: number;
-  /** Cada oración nueva se repite `repsPerPerson × people` veces (3 por persona por defecto). */
-  repsPerPerson?: number;
+  /**
+   * Cada oración nueva se repite `max(minRepetitions, people)` veces: una pasada por cada persona
+   * y, como mínimo, las 3 de siempre. Con una o dos personas son 3; con 4 son 4; con 5 son 5.
+   */
+  minRepetitions?: number;
   blockSize?: number;
   strategy?: LinkStrategy;
 }
@@ -44,15 +47,16 @@ function assertInteger(name: string, value: number, min: number, max = Infinity)
 
 /**
  * Convierte las oraciones en la lista ordenada de pasos de una manducación:
- * aprender cada oración `3 × personas` veces, ir uniéndolas, recitar todo y reflexionar.
+ * aprender cada oración (3 veces, o una por persona si son más de 3), ir uniéndolas (cada unión se dice una
+ * vez), recitar todo y reflexionar.
  */
 export function buildSession(sentences: readonly string[], options: SessionOptions = {}): SessionStep[] {
   const people = options.people ?? 1;
-  const repsPerPerson = options.repsPerPerson ?? DEFAULT_REPS_PER_PERSON;
+  const minRepetitions = options.minRepetitions ?? DEFAULT_MIN_REPETITIONS;
   const blockSize = options.blockSize ?? DEFAULT_BLOCK_SIZE;
   const strategy = options.strategy ?? 'pairs-and-blocks';
   assertInteger('people', people, 1, MAX_PEOPLE);
-  assertInteger('repsPerPerson', repsPerPerson, 1);
+  assertInteger('minRepetitions', minRepetitions, 1);
   assertInteger('blockSize', blockSize, 2);
 
   const last = sentences.length - 1;
@@ -64,22 +68,21 @@ export function buildSession(sentences: readonly string[], options: SessionOptio
   // Lo que cubre todo el texto lo recita el paso final, así que no se repite antes.
   const coversAll = (from: number, to: number) => from === 0 && to === last;
 
+  // Una unión se dice una sola vez, también en grupo: quien la dice va rotando. Así de a dos tarda lo
+  // mismo que solo, y el tiempo solo crece por las repeticiones de cada oración (desde 4 personas).
   const review = (from: number, to: number) => {
-    const kind: StepKind = to - from + 1 <= 2 ? 'link' : 'block';
-    for (let turn = 0; turn < people; turn++) {
-      steps.push({
-        kind,
-        from,
-        to,
-        text: textOf(from, to),
-        speaker: reviewTurn++ % people,
-        repetition: turn + 1,
-        repetitions: people,
-      });
-    }
+    steps.push({
+      kind: to - from + 1 <= 2 ? 'link' : 'block',
+      from,
+      to,
+      text: textOf(from, to),
+      speaker: reviewTurn++ % people,
+      repetition: 1,
+      repetitions: 1,
+    });
   };
 
-  const repetitions = repsPerPerson * people;
+  const repetitions = Math.max(minRepetitions, people);
   for (let i = 0; i <= last; i++) {
     // El primero en repetir cada oración va rotando para repartir el turno de arranque.
     for (let rep = 0; rep < repetitions; rep++) {

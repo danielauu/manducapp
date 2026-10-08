@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Manducapp es una app sin fines de lucro para rezar el evangelio por "manducación": trozo del evangelio, división en oraciones, repetición 3×n, uniones acumulativas, recitado final y meditación escrita. Funciona en iPhone y Android, en 6 idiomas (es, en, fr, it, de, pl).
+Manducapp es una app sin fines de lucro para rezar el evangelio por "manducación": trozo del evangelio, división en oraciones, repetición (3 veces, o una pasada por persona en grupo), uniones acumulativas, recitado final y meditación escrita. Funciona en iPhone y Android, en 6 idiomas (es, en, fr, it, de, pl).
 
 **Principio rector: costo de mantención mínimo.** Eso implica backend sin base de datos ni cuentas de usuario, sin APIs de pago, pocas dependencias y publicar primero donde no haya cuotas ni revisiones anuales.
 
@@ -35,7 +35,7 @@ El directorio `D:\Repositorios\Manducapp` está vacío y no es un repositorio gi
 | **Audio** | TTS del propio dispositivo (Web Speech API en la PWA, plugin nativo después). Sin audio pregrabado ni IA en vivo | Costo cero y sin pipeline. Permite repetir una oración suelta y controlar pausas. El audio pregrabado exigiría generar, almacenar y servir un derivado de texto con copyright en 6 idiomas todos los días. La IA en vivo cuesta por uso. |
 | **Plataforma** | **PWA primero** en GitHub Pages. Después, la misma app envuelta con Capacitor para Play Store y App Store | Costo $0 y sin revisión de tiendas para la v1. El mismo código sirve para todo. |
 | **Stack** | TypeScript, React, Vite, `vite-plugin-pwa`, Zustand, IndexedDB (`idb-keyval`), i18next, Vitest, Playwright. Backend: Hono sobre Cloudflare Workers | Tecnología web estándar y con poco cambio, afín a la experiencia del usuario. |
-| **Grupos (hasta 5)** | Modo presencial en **un solo dispositivo**: la app rota el turno y escala las repeticiones a 3×n. Sin sincronización | Es lo que describe la práctica (se pasa la oración de persona en persona). Un modo remoto en tiempo real exigiría estado de servidor y queda fuera. |
+| **Grupos (hasta 5)** | Modo presencial en **un solo dispositivo**: la app rota el turno y la oración se repite máx(3, personas) veces: una pasada por persona (ver [ADR-0003](decisions/0003-repeticiones-en-grupo.md)). Sin sincronización | Es lo que describe la práctica (se pasa la oración de persona en persona). Un modo remoto en tiempo real exigiría estado de servidor y queda fuera. |
 | **Meditaciones** | Guardado local (IndexedDB) y **exportar** como texto/JSON. Sin cuentas | Sin cuentas no hay datos personales en el servidor ni RGPD que gestionar. Exportar protege contra pérdida de datos si el navegador borra el almacenamiento. |
 | **División en oraciones** | Algoritmo determinista en `packages/core`, sin IA | Gratis, predecible y testeable. Un paso opcional con LLM en tiempo de build queda para después si la calidad no alcanza. |
 | **Recorte de texto largo** | Estimador de tiempo con presupuesto (30 min por defecto, configurable) y selección de rango con sugerencia de corte | Cubre el punto 2 del alcance. Si la fuente trae forma corta (AELF), se usa. |
@@ -88,7 +88,7 @@ cliente (PWA)  --GET /v1/gospel?date=2026-10-11&lang=es-->  Worker  --> Evangeli
 
 Devuelve una lista de pasos: `{tipo, rango, hablante, repeticion, texto}`.
 
-- **`aprender(i)`**: la oración i se repite `3 × n` veces (n = personas), con rotación de hablante.
+- **`aprender(i)`**: la oración i se repite `máx(3, n)` veces (n = personas): una pasada por persona, con rotación de quien arranca. Cada unión se dice una sola vez, turnándose.
 - **`unir(i-1, i)`**: una repetición por persona de la unión de pares.
 - **`bloque(a..b)`**: tras cada 4 oraciones, se recita el bloque acumulado.
 - **`final`**: recitado completo, con opción de ocultar el texto y mostrarlo al tocar.
@@ -116,7 +116,7 @@ Devuelve una lista de pasos: `{tipo, rango, hablante, repeticion, texto}`.
 Inicio (hoy, próximo domingo, texto propio), vista previa con recorte, reproductor de sesión (texto grande, contador, play/pausa, avance automático o manual, voz TTS), recitado final y pantalla de reflexión.
 
 **Fase 3: Modo grupo (2 a 5 personas)**
-Selector de personas, nombres opcionales, indicador de turno, repeticiones 3×n y tiempo estimado.
+Selector de personas, nombres opcionales, indicador de turno, repeticiones máx(3, n) y tiempo estimado.
 
 **Fase 4: Meditaciones y multilenguaje**
 Diario local con lista, edición y exportación. Cadenas de interfaz en los 6 idiomas. Ajustes de idioma de lectura y de voz.
