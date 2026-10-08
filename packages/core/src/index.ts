@@ -6,6 +6,6 @@ export * from './feeds/http';
 export * from './feeds/load';
 export * from './segment';
 export * from './session';
-export { isWord, splitSentences, wordCount } from './text';
+export { isWord, splitSentences, stripVerseNumbers, wordCount } from './text';
 export * from './timing';
 export * from './types';

@@ -126,6 +126,19 @@ describe('vistas', () => {
     expect(view.sentences).toEqual(['Sí. Primera frase de prueba que ya tiene largo suficiente.']);
   });
 
+  it('ownTextToView quita los números de versículo del texto pegado', () => {
+    const view = ownTextToView(
+      '26 Primera frase de prueba con largo suficiente.\n27 Segunda frase de prueba también con largo suficiente.',
+      'es',
+      'Lc 1,26-27',
+    );
+    expect(view.reference).toBe('Lc 1,26-27');
+    expect(view.sentences).toEqual([
+      'Primera frase de prueba con largo suficiente.',
+      'Segunda frase de prueba también con largo suficiente.',
+    ]);
+  });
+
   it('ownTextToView divide un texto corrido y largo', () => {
     const long = Array.from({ length: 50 }, (_, index) => `w${index}`).join(' ');
     expect(ownTextToView(long, 'es', 'x').sentences.length).toBeGreaterThan(1);

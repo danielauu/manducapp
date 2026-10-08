@@ -151,8 +151,12 @@ export const de: Record<MessageKey, string> = {
 
   'own.title': 'Mein eigener Text',
   'own.language': 'Sprache des Textes',
+  'own.reference': 'Stelle oder Titel (optional)',
+  'own.referencePlaceholder': 'Zum Beispiel Lk 1,26-38',
+  'own.paste': 'Aus der Zwischenablage einfügen',
+  'own.pasteFailed': 'Die Zwischenablage konnte nicht gelesen werden. Den Text von Hand einfügen.',
   'own.hint':
-    'Die Stelle einfügen, in Absätzen oder am Stück. Die App teilt sie in Sätze, die sich leicht auswendig lernen lassen.',
+    'Die Stelle einfügen, zum Beispiel von der Vatikan-Webseite oder aus dem Messbuch kopiert, in Absätzen oder am Stück. Die App teilt sie in Sätze, die sich leicht auswendig lernen lassen, und entfernt die Versnummern.',
   'own.placeholder': 'Text hier einfügen oder schreiben',
   'own.continue': 'Weiter',
   'own.tooShort': 'Mindestens ein paar Wörter schreiben, um fortzufahren.',

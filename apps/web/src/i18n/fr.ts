@@ -151,8 +151,12 @@ export const fr: Record<MessageKey, string> = {
 
   'own.title': 'Mon propre texte',
   'own.language': 'Langue du texte',
+  'own.reference': 'Référence ou titre (facultatif)',
+  'own.referencePlaceholder': 'Par exemple, Lc 1,26-38',
+  'own.paste': 'Coller depuis le presse-papiers',
+  'own.pasteFailed': 'Impossible de lire le presse-papiers. Coller le texte à la main.',
   'own.hint':
-    'Coller le passage, en paragraphes ou d’un seul bloc. L’application le découpe en phrases faciles à mémoriser.',
+    'Coller le passage, par exemple copié depuis le site du Vatican ou d’un missel, en paragraphes ou d’un seul bloc. L’application le découpe en phrases faciles à mémoriser et retire les numéros de versets.',
   'own.placeholder': 'Coller ou écrire le texte ici',
   'own.continue': 'Continuer',
   'own.tooShort': 'Écrire au moins quelques mots pour continuer.',

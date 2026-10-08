@@ -8,6 +8,15 @@ export async function copyToClipboard(text: string): Promise<boolean> {
   }
 }
 
+/** Lee el portapapeles; `undefined` si el navegador no lo permite (hay que dar permiso o no existe). */
+export async function readClipboard(): Promise<string | undefined> {
+  try {
+    return await navigator.clipboard.readText();
+  } catch {
+    return undefined;
+  }
+}
+
 export function canShare(): boolean {
   return typeof navigator.share === 'function';
 }

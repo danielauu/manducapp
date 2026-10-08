@@ -3,6 +3,7 @@ import {
   estimateSessionSeconds,
   segment,
   splitSentences,
+  stripVerseNumbers,
   type Gospel,
   type IsoDate,
   type Lang,
@@ -34,9 +35,12 @@ export function gospelToView(gospel: Gospel, kind: 'today' | 'sunday'): GospelVi
   };
 }
 
-/** El texto pegado se parte en frases; `segment` une las muy cortas y divide las muy largas. */
+/**
+ * El texto pegado pierde los números de versículo y se parte en frases; `segment` une las muy cortas
+ * y divide las muy largas.
+ */
 export function ownTextToView(text: string, lang: Lang, title: string): GospelView {
-  const lines = text.split(/\r?\n/).flatMap(splitSentences);
+  const lines = stripVerseNumbers(text).split(/\r?\n/).flatMap(splitSentences);
   return { kind: 'own', lang, title: '', reference: title, sentences: segment(lines, lang) };
 }
 
