@@ -32,7 +32,7 @@ export function Home() {
       )}
 
       <div className="choices" aria-busy={busy}>
-        <button className="choice" disabled={busy} onClick={() => void openGospel('today')}>
+        <button className="choice featured" disabled={busy} onClick={() => void openGospel('today')}>
           <span className="choice-title">{t('home.today')}</span>
           <span className="choice-sub">{formatDay(today, state.uiLang)}</span>
         </button>

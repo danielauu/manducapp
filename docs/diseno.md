@@ -1,5 +1,7 @@
 # Contexto para evaluar el diseño gráfico de Manducapp
 
+> Estado: este documento fue el punto de partida de la revisión. El resultado (diagnóstico, decisiones y mediciones) está en [ADR-0004](decisions/0004-identidad-visual.md).
+
 Este documento es el punto de partida para quien evalúe o rediseñe la parte visual de la app (una persona, o un agente). Dice qué se quiere conservar, qué se percibe como genérico, qué restricciones técnicas hay y qué se espera como resultado.
 
 ## Qué es la app

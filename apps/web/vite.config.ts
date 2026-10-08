@@ -14,7 +14,7 @@ export default defineConfig({
       // El manifest ya vive en public/manifest.webmanifest.
       manifest: false,
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,png,webmanifest,woff2}'],
         // La navegación es por hash: cualquier carga de página se sirve desde index.html.
         navigateFallback: 'index.html',
         cleanupOutdatedCaches: true,
