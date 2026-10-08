@@ -60,7 +60,7 @@ export const pl: Record<MessageKey, string> = {
   'group.names': 'Imiona (opcjonalnie)',
   'group.person': 'Osoba {number}',
   'group.note':
-    'W grupie każde zdanie powtarza się 3 razy na osobę, więc czas rośnie z każdym uczestnikiem.',
+    'W grupie każda osoba mówi każde zdanie raz (łącznie zawsze co najmniej 3 razy), a połączenia mówi się tylko raz, na zmianę. Do 3 osób czas jest taki sam; rośnie dopiero od 4.',
   'group.everyone': 'Cała grupa',
   'group.turn': 'Kolej: {name}',
   'group.next': 'Następnie: {name}',

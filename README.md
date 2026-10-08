@@ -1,6 +1,6 @@
 # Manducapp
 
-Herramienta sin fines de lucro para rezar el evangelio por **manducación**: se toma un trozo del evangelio, se divide en oraciones retenibles, cada oración se repite tres veces (3×n si se reza en grupo de n personas), se van uniendo las oraciones, se recita el texto completo de memoria y se termina con una pausa de reflexión y una meditación escrita.
+Herramienta sin fines de lucro para rezar el evangelio por **manducación**: se toma un trozo del evangelio, se divide en oraciones retenibles, cada oración se repite tres veces (en grupo, una pasada por cada persona: de 3 a 5 veces), se van uniendo las oraciones, se recita el texto completo de memoria y se termina con una pausa de reflexión y una meditación escrita.
 
 Funciona en iPhone y Android como PWA (después, también en las tiendas), en español, inglés, francés, italiano, alemán y polaco.
 

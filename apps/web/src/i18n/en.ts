@@ -58,7 +58,8 @@ export const en: Record<MessageKey, string> = {
   'pace.fast': 'Faster',
   'group.names': 'Names (optional)',
   'group.person': 'Person {number}',
-  'group.note': 'In a group each sentence is repeated 3 times per person, so the time grows with every member.',
+  'group.note':
+    'In a group, each person says each sentence once (always at least 3 times in total) and the links are said just once, taking turns. Up to 3 people take the same time; it only grows from 4 on.',
   'group.everyone': 'The whole group',
   'group.turn': "{name}'s turn",
   'group.next': 'Next: {name}',

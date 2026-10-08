@@ -55,12 +55,12 @@ describe('planSession', () => {
 });
 
 describe('planSession en grupo', () => {
-  it('con más personas el mismo texto tarda más', () => {
-    const solo = planSession(sentences(6), 600, 'pairs-and-blocks', null, 1);
-    const trio = planSession(sentences(6), 600, 'pairs-and-blocks', null, 3);
-    const five = planSession(sentences(6), 600, 'pairs-and-blocks', null, 5);
-    expect(trio.seconds).toBeGreaterThan(solo.seconds);
-    expect(five.seconds).toBeGreaterThan(trio.seconds);
+  it('hasta 3 personas el texto tarda lo mismo que solo, y desde 4 tarda más', () => {
+    const seconds = (people: number) => planSession(sentences(6), 600, 'pairs-and-blocks', null, people).seconds;
+    expect(seconds(2)).toBeCloseTo(seconds(1), 5);
+    expect(seconds(3)).toBeCloseTo(seconds(1), 5);
+    expect(seconds(4)).toBeGreaterThan(seconds(3));
+    expect(seconds(5)).toBeGreaterThan(seconds(4));
   });
 
   it('con más personas caben menos oraciones en el mismo tiempo', () => {
