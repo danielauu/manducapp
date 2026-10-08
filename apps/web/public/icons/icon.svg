@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1f3a5f"/>
+  <defs>
+    <path id="wing" d="M206 214 C160 196 120 164 100 112 C104 172 108 222 130 268 C150 300 178 312 208 316 Z"/>
+  </defs>
+  <g transform="translate(256 256) scale(0.92) translate(-256 -279)">
+    <!-- alas -->
+    <use href="#wing" fill="#ffffff"/>
+    <use href="#wing" fill="#ffffff" transform="translate(512 0) scale(-1 1)"/>
+    <g fill="none" stroke="#1f3a5f" stroke-width="6" stroke-linecap="round" opacity="0.5">
+      <path d="M196 236 C158 224 124 192 108 156"/>
+      <path d="M196 262 C162 252 136 232 118 208"/>
+      <path d="M200 288 C170 282 148 268 134 248"/>
+      <path d="M316 236 C354 224 388 192 404 156"/>
+      <path d="M316 262 C350 252 376 232 394 208"/>
+      <path d="M312 288 C342 282 364 268 378 248"/>
+    </g>
+    <!-- cuerpo -->
+    <ellipse cx="256" cy="262" rx="76" ry="92" fill="#ffffff"/>
+    <!-- cabeza y copete -->
+    <circle cx="256" cy="178" r="36" fill="#ffffff"/>
+    <path d="M246 148 C244 132 252 124 262 120 C260 130 266 138 268 148 Z" fill="#ffffff"/>
+    <!-- pico: largo, con bolsa, apoyado en el pecho -->
+    <path d="M243 198 C240 232 237 262 241 290 C245 308 251 318 256 326 C261 318 267 308 271 290 C275 262 272 232 269 198 Z" fill="#c9a45c" stroke="#1f3a5f" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M256 204 L256 318" stroke="#1f3a5f" stroke-width="3.5" stroke-linecap="round" opacity="0.55"/>
+    <!-- ojos -->
+    <circle cx="240" cy="170" r="5.5" fill="#1f3a5f"/>
+    <circle cx="272" cy="170" r="5.5" fill="#1f3a5f"/>
+    <!-- gota de sangre -->
+    <path d="M256 336 C247 352 243 360 256 371 C269 360 265 352 256 336 Z" fill="#e5604f"/>
+    <!-- nido y polluelos -->
+    <g fill="#ffffff">
+      <circle cx="198" cy="402" r="20"/>
+      <circle cx="256" cy="410" r="20"/>
+      <circle cx="314" cy="402" r="20"/>
+    </g>
+    <g fill="#c9a45c">
+      <ellipse cx="198" cy="378" rx="7" ry="9"/>
+      <ellipse cx="256" cy="386" rx="7" ry="9"/>
+      <ellipse cx="314" cy="378" rx="7" ry="9"/>
+    </g>
+    <path d="M132 410 Q256 484 380 410" fill="none" stroke="#c9a45c" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>

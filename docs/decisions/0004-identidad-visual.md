@@ -31,7 +31,7 @@ La idea es un **libro de oración impreso**: papel cálido, tinta azul y un ocre
 
 - axe-core sin violaciones en 15 pantallas y estados, en claro y oscuro (se encontró y corrigió una: el texto fuera del tiempo elegido en la vista previa usaba opacidad y perdía contraste; ahora usa el color tenue y cursiva).
 - Lighthouse móvil: rendimiento 95 a 97, accesibilidad 100, buenas prácticas 100, SEO 100; CLS 0.
-- Peso: cada pantalla baja unos 115 KB de tipografías en español, inglés, francés, italiano y alemán (el polaco suma hasta unos 100 KB más de `latin-ext`). Las cinco de la primera pantalla se piden con `preload` junto con el código. El precaché sin conexión pasa de unos 340 a unos 560 KB.
+- Peso: cada pantalla baja unos 115 KB de tipografías en español, inglés, francés, italiano y alemán (el polaco suma hasta unos 100 KB más de `latin-ext`). Las cinco de la primera pantalla se piden con `preload` junto con el código. El precaché sin conexión pasa de unos 340 a unos 560 KB (unos 600 con el ícono nuevo).
 
 ## Alternativas descartadas
 
@@ -44,4 +44,10 @@ La idea es un **libro de oración impreso**: papel cálido, tinta azul y un ocre
 
 - Los avisos de la app (versión nueva, instalar) muestran uno solo a la vez: apilar uno nuevo bajo uno ya visible lo empujaba hacia arriba y contaba como desplazamiento de diseño (CLS 0,07).
 - Agregar o cambiar un peso exige copiar el `woff2`, declarar su `@font-face` y confirmar que el precaché lo incluye.
-- El ícono de la app (cruz blanca sobre azul) sigue siendo provisorio; es un entregable aparte.
+
+## Ícono
+
+Reemplaza a la cruz blanca provisoria por un **pelícano piadoso**: el pelícano que alimenta a sus polluelos con su propia sangre, símbolo antiguo de Cristo y de la Eucaristía («Pie pelicane, Iesu Domine», del *Adoro te devote*), muy cercano a lo que hace esta app: darse el evangelio como alimento. Está visto de frente, con las alas abiertas, el pico largo apoyado en el pecho, una gota roja y tres polluelos en el nido, en blanco, ocre y rojo sobre el azul.
+
+- La fuente es [`apps/web/public/icons/icon.svg`](../../apps/web/public/icons/icon.svg), que también sirve de favicon. Los PNG (192, 512 y 180 para iOS) salen de renderizar ese SVG a cada tamaño; el fondo es de borde a borde y el dibujo queda dentro de la zona segura de los íconos con máscara.
+- Es una primera versión: si más adelante hay un ilustrador, se reemplaza el SVG y los PNG sin tocar nada más.
