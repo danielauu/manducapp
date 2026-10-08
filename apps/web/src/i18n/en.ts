@@ -147,8 +147,12 @@ export const en: Record<MessageKey, string> = {
 
   'own.title': 'My own text',
   'own.language': 'Text language',
+  'own.reference': 'Reference or title (optional)',
+  'own.referencePlaceholder': 'For example, Lk 1,26-38',
+  'own.paste': 'Paste from the clipboard',
+  'own.pasteFailed': 'Could not read the clipboard. Paste the text by hand.',
   'own.hint':
-    'Paste the passage, in paragraphs or all in one block. The app splits it into sentences that are easy to memorize.',
+    'Paste the passage, for example copied from the Vatican website or your missal, in paragraphs or all in one block. The app splits it into sentences that are easy to memorize and removes verse numbers.',
   'own.placeholder': 'Paste or type the text here',
   'own.continue': 'Continue',
   'own.tooShort': 'Write at least a few words to continue.',

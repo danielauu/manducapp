@@ -148,8 +148,12 @@ export const es = {
 
   'own.title': 'Mi propio texto',
   'own.language': 'Idioma del texto',
+  'own.reference': 'Referencia o título (opcional)',
+  'own.referencePlaceholder': 'Por ejemplo, Lc 1,26-38',
+  'own.paste': 'Pegar desde el portapapeles',
+  'own.pasteFailed': 'No se pudo leer el portapapeles. Pegar el texto a mano.',
   'own.hint':
-    'Pegar el pasaje, en párrafos o todo corrido. La app lo divide en oraciones fáciles de memorizar.',
+    'Pegar el pasaje, por ejemplo copiado de la página del Vaticano o del misal, en párrafos o todo corrido. La app lo divide en oraciones fáciles de memorizar y quita los números de versículo.',
   'own.placeholder': 'Pegar o escribir el texto aquí',
   'own.continue': 'Continuar',
   'own.tooShort': 'Escribir al menos unas palabras para continuar.',

@@ -715,3 +715,16 @@ footer a {
 .toasts .banner p {
   margin: 4px 0 10px;
 }
+
+input[type='text'] {
+  padding: 10px;
+  font: inherit;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.field input[type='text'] {
+  width: 100%;
+}

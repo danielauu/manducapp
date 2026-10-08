@@ -150,8 +150,12 @@ export const pl: Record<MessageKey, string> = {
 
   'own.title': 'Mój własny tekst',
   'own.language': 'Język tekstu',
+  'own.reference': 'Odnośnik lub tytuł (opcjonalnie)',
+  'own.referencePlaceholder': 'Na przykład Łk 1,26-38',
+  'own.paste': 'Wklej ze schowka',
+  'own.pasteFailed': 'Nie udało się odczytać schowka. Wkleić tekst ręcznie.',
   'own.hint':
-    'Wkleić fragment, w akapitach lub w jednym bloku. Aplikacja podzieli go na zdania łatwe do zapamiętania.',
+    'Wkleić fragment, na przykład skopiowany ze strony Watykanu lub z mszału, w akapitach lub w jednym bloku. Aplikacja podzieli go na zdania łatwe do zapamiętania i usunie numery wersetów.',
   'own.placeholder': 'Wklej lub wpisz tekst tutaj',
   'own.continue': 'Dalej',
   'own.tooShort': 'Wpisać przynajmniej kilka słów, aby kontynuować.',

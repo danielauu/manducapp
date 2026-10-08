@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { collapseSpaces, decodeEntities, htmlToText, splitSentences, stripTags } from './text';
+import { collapseSpaces, decodeEntities, htmlToText, splitSentences, stripTags, stripVerseNumbers } from './text';
 
 describe('decodeEntities', () => {
   it('decodifica entidades numéricas, hexadecimales y con nombre', () => {
@@ -37,5 +37,32 @@ describe('splitSentences', () => {
   it('una frase sin punto final queda entera, y el vacío no genera nada', () => {
     expect(splitSentences('sin punto final')).toEqual(['sin punto final']);
     expect(splitSentences('   ')).toEqual([]);
+  });
+});
+
+describe('stripVerseNumbers', () => {
+  it('quita los números al inicio de línea, con punto, paréntesis o solo con espacio', () => {
+    expect(stripVerseNumbers('26 En aquel tiempo.\n27. Y dijo.\n28) Otra línea.\n29: Fin.')).toBe(
+      'En aquel tiempo.\nY dijo.\nOtra línea.\nFin.',
+    );
+  });
+
+  it('quita superíndices, corchetes y paréntesis con números', () => {
+    expect(stripVerseNumbers('²⁶En el sexto mes [27] fue enviado (28) el ángel.')).toBe('En el sexto mes  fue enviado  el ángel.');
+  });
+
+  it('quita el número pegado tras un punto cuando empieza otra frase', () => {
+    expect(stripVerseNumbers('Hágase en mí.38 Y el ángel se fue.')).toBe('Hágase en mí. Y el ángel se fue.');
+    expect(stripVerseNumbers('Dijo así. 12 «Vengan».')).toBe('Dijo así. «Vengan».');
+  });
+
+  it('no toca los números que son parte de la frase', () => {
+    const text = 'Tenían 5 panes y 2 peces. En el año 15 del reinado, 3 hombres llegaron.';
+    expect(stripVerseNumbers(text)).toBe(text);
+    expect(stripVerseNumbers('Cuarenta días y 40 noches.')).toBe('Cuarenta días y 40 noches.');
+  });
+
+  it('un texto sin números queda igual', () => {
+    expect(stripVerseNumbers('Una frase normal.\nOtra frase.')).toBe('Una frase normal.\nOtra frase.');
   });
 });

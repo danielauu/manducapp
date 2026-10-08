@@ -151,8 +151,12 @@ export const it: Record<MessageKey, string> = {
 
   'own.title': 'Il mio testo',
   'own.language': 'Lingua del testo',
+  'own.reference': 'Riferimento o titolo (facoltativo)',
+  'own.referencePlaceholder': 'Ad esempio, Lc 1,26-38',
+  'own.paste': 'Incolla dagli appunti',
+  'own.pasteFailed': 'Impossibile leggere gli appunti. Incollare il testo a mano.',
   'own.hint':
-    'Incollare il brano, in paragrafi o tutto di seguito. L’app lo divide in frasi facili da memorizzare.',
+    'Incollare il brano, ad esempio copiato dal sito del Vaticano o dal messale, in paragrafi o tutto di seguito. L’app lo divide in frasi facili da memorizzare e toglie i numeri dei versetti.',
   'own.placeholder': 'Incolla o scrivi qui il testo',
   'own.continue': 'Continua',
   'own.tooShort': 'Scrivere almeno qualche parola per continuare.',

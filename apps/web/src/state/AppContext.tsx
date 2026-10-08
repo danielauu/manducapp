@@ -56,7 +56,7 @@ interface AppApi {
   setUiLang: (uiLang: Lang) => void;
   openGospel: (kind: 'today' | 'sunday') => Promise<void>;
   retry: () => Promise<void>;
-  submitOwnText: (text: string) => void;
+  submitOwnText: (text: string, reference?: string) => void;
   setBudget: (minutes: number) => void;
   setStrategy: (strategy: LinkStrategy) => void;
   setCount: (count: number | null) => void;
@@ -139,8 +139,9 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [openGospel, state.pending]);
 
   const submitOwnText = useCallback<AppApi['submitOwnText']>(
-    (text) => {
-      dispatch({ type: 'setGospel', gospel: ownTextToView(text, state.lang, translate(uiLang, 'own.title')) });
+    (text, reference) => {
+      const title = reference?.trim() || translate(uiLang, 'own.title');
+      dispatch({ type: 'setGospel', gospel: ownTextToView(text, state.lang, title) });
       navigate('preview');
     },
     [state.lang, uiLang],
