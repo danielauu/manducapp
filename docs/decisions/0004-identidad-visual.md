@@ -47,7 +47,7 @@ La idea es un **libro de oración impreso**: papel cálido, tinta azul y un ocre
 
 ## Ícono
 
-Reemplaza a la cruz blanca provisoria por un **pelícano piadoso**: el pelícano que alimenta a sus polluelos con su propia sangre, símbolo antiguo de Cristo y de la Eucaristía («Pie pelicane, Iesu Domine», del *Adoro te devote*), muy cercano a lo que hace esta app: darse el evangelio como alimento. Está visto de frente, con las alas abiertas, el pico largo apoyado en el pecho, una gota roja y tres polluelos en el nido, en blanco, ocre y rojo sobre el azul.
+Reemplaza a la cruz blanca provisoria por un **pelícano piadoso**: el pelícano que alimenta a sus polluelos con su propia sangre, símbolo antiguo de Cristo y de la Eucaristía («Pie pelicane, Iesu Domine», del *Adoro te devote*), muy cercano a lo que hace esta app: darse el evangelio como alimento. Está **de perfil** (una primera versión de frente se descartó por pedido del usuario): el cuello curvado, el pico largo con su bolsa apoyado en el pecho, una gota roja y tres polluelos en un nido pequeño, en blanco, ocre y rojo sobre el azul. El nido es chico a propósito: el protagonista es el ave.
 
 - La fuente es [`apps/web/public/icons/icon.svg`](../../apps/web/public/icons/icon.svg), que también sirve de favicon. Los PNG (192, 512 y 180 para iOS) salen de renderizar ese SVG a cada tamaño; el fondo es de borde a borde y el dibujo queda dentro de la zona segura de los íconos con máscara.
 - Es una primera versión: si más adelante hay un ilustrador, se reemplaza el SVG y los PNG sin tocar nada más.
