@@ -1,26 +1,143 @@
+/*
+ * Tipografías empaquetadas (licencia SIL OFL 1.1, ver src/fonts/): Alegreya para el texto de lectura y
+ * los títulos, Alegreya Sans para las etiquetas. Cada alfabeto va en su archivo y el navegador solo baja
+ * el que usan los caracteres de la pantalla: el español, el inglés, el francés, el italiano y el alemán
+ * caben en `latin`; el polaco agrega `latin-ext` (ą ć ę ł ń ś ź ż).
+ */
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-ext-400-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-400-italic.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-ext-400-italic.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-500-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Alegreya';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./fonts/alegreya-latin-ext-500-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-sans-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./fonts/alegreya-sans-latin-ext-400-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/alegreya-sans-latin-700-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Alegreya Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./fonts/alegreya-sans-latin-ext-700-normal.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+    U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/*
+ * Papel, tinta azul y un ocre de manuscrito. El azul (--accent) es la identidad; el ocre (--gold) solo
+ * adorna (números, adornos, indicadores) y nunca es lo único que dice algo.
+ */
 :root {
-  --bg: #f7f5f0;
-  --fg: #1d2530;
-  --muted: #5b6573;
-  --card: #ffffff;
-  --line: #d9d5cb;
+  --serif: 'Alegreya', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+  --sans: 'Alegreya Sans', 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+
+  --bg: #f5efe2;
+  --fg: #1b2230;
+  --muted: #566073;
+  --field: #fffdf7;
+  --line: #d6ccb6;
   --accent: #1f3a5f;
   --accent-fg: #ffffff;
+  --frame: rgb(255 255 255 / 0.34);
+  --gold: #7a5c18;
   --ok: #1d6b3a;
   --bad: #a3261f;
-  --bad-bg: #fbeceb;
+  --bad-bg: #f8e6e1;
   color-scheme: light dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #12171f;
-    --fg: #e8e6e1;
-    --muted: #9aa4b2;
-    --card: #1b222c;
-    --line: #2f3946;
+    --bg: #0f141c;
+    --fg: #ece7db;
+    --muted: #a3acb9;
+    --field: #161d27;
+    --line: #2c3745;
     --accent: #6d9eda;
     --accent-fg: #0e1218;
+    --frame: rgb(14 18 24 / 0.38);
+    --gold: #cfaa5e;
     --ok: #6fcf8d;
     --bad: #ff8a80;
     --bad-bg: #2b1a19;
@@ -35,29 +152,38 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font: 400 1.0625rem/1.5 var(--sans);
+  font-synthesis: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
 }
 
 .app {
   max-width: 760px;
   margin: 0 auto;
-  padding: max(12px, env(safe-area-inset-top)) 16px max(32px, env(safe-area-inset-bottom));
+  padding: max(12px, env(safe-area-inset-top)) 20px max(40px, env(safe-area-inset-bottom));
 }
 
 .topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 44px;
+  min-height: 52px;
   margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font: italic 400 1.5rem/1 var(--serif);
+  letter-spacing: 0.01em;
   color: var(--accent);
   text-decoration: none;
 }
@@ -66,33 +192,53 @@ body {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+  padding: 0 0 0 12px;
+  font: 700 0.8rem/1 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--accent);
   text-decoration: none;
-  padding: 0 0 0 12px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  font-weight: 500;
 }
 
 h1 {
-  margin: 8px 0 12px;
-  font-size: 1.7rem;
-  line-height: 1.2;
+  margin: 20px 0 10px;
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
 }
 
 h2 {
   margin: 0 0 8px;
-  font-size: 1.15rem;
+  font-size: 1.5rem;
+  line-height: 1.15;
 }
 
 h3 {
   margin: 16px 0 6px;
-  font-size: 1rem;
+  font: 700 0.8rem/1.3 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
+/* Etiquetas en versalitas espaciadas, como las rúbricas de un misal. */
 .eyebrow {
-  margin: 8px 0 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.06em;
+  margin: 18px 0 2px;
+  font: 700 0.8rem/1.3 var(--sans);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--accent);
+}
+
+.eyebrow + h1 {
+  margin-top: 4px;
 }
 
 .lead,
@@ -106,16 +252,19 @@ footer {
 }
 
 .muted {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
+  font: italic 400 1.25rem/1.4 var(--serif);
 }
 
 .meta {
-  margin: 4px 0 16px;
-  font-size: 0.95rem;
+  margin: 4px 0 14px;
+  font: 700 0.8rem/1.4 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .hint {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin: 6px 0;
 }
 
@@ -125,18 +274,25 @@ footer {
 }
 
 .credit {
-  font-size: 0.85rem;
-  margin: 20px 0 4px;
+  margin: 32px 0 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
 }
 
 .note {
-  font-size: 0.85rem;
-  font-style: italic;
+  font: italic 400 1rem/1.4 var(--serif);
 }
 
 footer {
-  font-size: 0.85rem;
-  margin-top: 32px;
+  margin-top: 40px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+
+footer p {
+  margin: 0 0 4px;
 }
 
 footer a {
@@ -146,80 +302,156 @@ footer a {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin: 12px 0 20px;
+  gap: 6px;
+  margin: 14px 0 22px;
 }
 
 .field label,
 label {
-  font-size: 0.85rem;
+  font: 700 0.76rem/1.3 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
 select,
 textarea,
-input[type='range'] {
+input[type='range'],
+input[type='text'] {
   font: inherit;
   max-width: 100%;
 }
 
 select,
-textarea {
-  padding: 10px;
-  border-radius: 10px;
+textarea,
+input[type='text'] {
+  padding: 10px 12px;
+  border-radius: 2px;
   border: 1px solid var(--line);
-  background: var(--card);
+  background: var(--field);
   color: var(--fg);
+}
+
+select,
+input[type='text'] {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+select {
+  appearance: none;
+  padding-right: 38px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) 50%,
+    calc(100% - 14px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  text-overflow: ellipsis;
 }
 
 textarea {
   display: block;
   width: 100%;
   resize: vertical;
-  font-size: 1.05rem;
+  font-family: var(--serif);
+  font-size: 1.25rem;
   line-height: 1.5;
 }
 
+/* Inicio: la lectura de hoy se destaca como una tarjeta impresa; el resto, como renglones de un índice. */
 .choices {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  margin-top: 8px;
 }
 
 .choice {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
   width: 100%;
-  min-height: 72px;
-  padding: 14px 16px;
+  min-height: 76px;
+  padding: 16px 40px 16px 0;
   text-align: left;
-  background: var(--card);
+  background: transparent;
   color: var(--fg);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
 }
 
-.choice:hover:not(:disabled) {
-  border-color: var(--accent);
+.choice:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.choice::after {
+  content: '→';
+  content: '→' / '';
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 400 1.6rem/1 var(--serif);
+  color: var(--accent);
+}
+
+.choice:hover:not(:disabled) .choice-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
 .choice-title {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font: 500 1.4rem/1.15 var(--serif);
 }
 
 .choice-sub {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+}
+
+.choice.featured {
+  min-height: 112px;
+  margin-bottom: 8px;
+  padding: 22px 66px 22px 22px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 5px var(--accent), inset 0 0 0 6px var(--frame);
+}
+
+.choice.featured:last-child {
+  border-bottom-color: var(--accent);
+}
+
+.choice.featured::after {
+  right: 22px;
+  color: var(--accent-fg);
+}
+
+.choice.featured .choice-title {
+  font-size: 1.85rem;
+}
+
+.choice.featured .choice-sub {
+  color: var(--accent-fg);
+  font: 700 0.8rem/1.3 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.88;
 }
 
 .banner {
   margin: 0 0 16px;
   padding: 12px 14px;
   border: 1px solid var(--bad);
-  border-radius: 12px;
+  border-left-width: 4px;
+  border-radius: 2px;
   background: var(--bad-bg);
 }
 
@@ -227,28 +459,39 @@ textarea {
   margin: 4px 0 10px;
 }
 
+/* Las oraciones del pasaje, numeradas como versículos de un libro. */
 .sentences {
-  margin: 0;
-  padding-left: 1.6rem;
-  font-size: 1.15rem;
-  line-height: 1.55;
+  margin: 28px 0 0;
+  padding-left: 2.2rem;
+  font: 400 1.3rem/1.42 var(--serif);
+  hyphens: auto;
 }
 
 .sentences li {
-  padding: 8px 0 8px 4px;
-  border-bottom: 1px solid var(--line);
+  padding: 12px 0 12px 4px;
+  border-top: 1px solid var(--line);
+}
+
+.sentences li::marker {
+  font: italic 400 1.1rem var(--serif);
+  color: var(--gold);
+}
+
+/* Lo que no entra en el tiempo elegido se apaga con el color tenue (no con opacidad: perdería contraste). */
+.sentences li.skipped {
+  color: var(--muted);
+  font-style: italic;
 }
 
 .actions {
-  margin: 16px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
 }
 
 section {
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 16px;
-  margin: 16px 0;
+  margin: 24px 0;
 }
 
 ol,
@@ -257,7 +500,7 @@ ul {
 }
 
 .env {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   word-break: break-word;
   padding-left: 1.2rem;
 }
@@ -286,10 +529,11 @@ ul {
 }
 
 button {
-  font: inherit;
-  padding: 10px 16px;
-  border: 0;
-  border-radius: 10px;
+  font: 500 1.15rem/1.2 var(--serif);
+  letter-spacing: 0.01em;
+  padding: 10px 18px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
   background: var(--accent);
   color: var(--accent-fg);
   cursor: pointer;
@@ -298,7 +542,6 @@ button {
 button.secondary {
   background: transparent;
   color: var(--accent);
-  border: 1px solid var(--accent);
 }
 
 button:disabled {
@@ -311,8 +554,8 @@ button:disabled {
   max-height: 280px;
   overflow: auto;
   padding: 10px;
-  border-radius: 8px;
-  background: var(--bg);
+  border-radius: 2px;
+  background: var(--field);
   border: 1px solid var(--line);
   font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   white-space: pre-wrap;
@@ -326,7 +569,7 @@ button:disabled {
 table {
   border-collapse: collapse;
   width: 100%;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 th,
@@ -347,24 +590,31 @@ p.bad {
 }
 
 .credits {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--muted);
   list-style: none;
   padding: 0;
 }
 
+/* Vista previa: ajustes sobre el papel, separados del texto por una doble línea de imprenta. */
 .plan {
-  margin: 0 0 20px;
+  margin: 22px 0 0;
+  padding-top: 8px;
+  border-top: 3px double var(--line);
 }
 
 .plan-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 14px;
+}
+
+.plan-row .field:nth-child(n + 3) {
+  grid-column: 1 / -1;
 }
 
 .plan .field {
-  margin: 0 0 12px;
+  margin: 8px 0 8px;
 }
 
 .plan input[type='range'] {
@@ -373,8 +623,8 @@ p.bad {
 }
 
 .estimate {
-  margin: 4px 0 12px;
-  font-weight: 600;
+  margin: 8px 0 6px;
+  font: italic 500 1.35rem/1.25 var(--serif);
   color: var(--ok);
 }
 
@@ -382,15 +632,10 @@ p.bad {
   color: var(--bad);
 }
 
-.sentences li.skipped {
-  opacity: 0.4;
-}
-
 .progress {
-  height: 6px;
-  margin: 4px 0 12px;
+  height: 3px;
+  margin: 12px 0 0;
   background: var(--line);
-  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -401,33 +646,80 @@ p.bad {
   transition: width 0.3s ease;
 }
 
+/* El texto de la oración: sin caja, sobre el papel, entre dos líneas finas y con un adorno que corta la primera. */
 .stage {
-  margin: 12px 0 16px;
-  padding: 20px 18px;
-  font-size: 1.6rem;
-  line-height: 1.45;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-left: 5px solid var(--accent);
-  border-radius: 14px;
+  position: relative;
+  margin: 30px 0 22px;
+  padding: 30px 0 28px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font: 400 1.9rem/1.33 var(--serif);
+  hyphens: auto;
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
+.stage::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  background: var(--gold);
+  box-shadow: 0 0 0 7px var(--bg);
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.stage.hidden-text {
+  font-size: 1.4rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.stage.size-large {
+  font-size: 2.3rem;
+}
+
+.stage.size-xlarge {
+  font-size: 2.8rem;
+}
+
+.stage.hidden-text.size-large,
+.stage.hidden-text.size-xlarge {
+  font-size: 1.7rem;
+}
+
+/* Quién reza y en qué vuelta: una línea de rúbrica, no una caja. */
 .phase {
-  margin: 8px 0;
-  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 8px;
+  font: 700 0.9rem/1.3 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
 .phase.turn {
   color: var(--ok);
-  font-weight: 600;
+}
+
+.phase.turn::before {
+  content: '';
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .countdown {
-  height: 6px;
-  margin: 0 0 16px;
+  height: 4px;
+  margin: 0 0 18px;
   background: var(--line);
-  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -460,50 +752,60 @@ p.bad {
 }
 
 .controls button {
-  flex: 1 1 0;
-  min-height: 48px;
+  flex: 1 1 auto;
+  min-height: 52px;
+  padding-inline: 12px;
+  white-space: nowrap;
 }
 
 .banner.soft {
   border-color: var(--line);
-  background: var(--card);
+  border-left-color: var(--gold);
+  background: var(--field);
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .player-settings {
-  margin: 20px 0;
-  padding: 12px 14px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  margin: 24px 0;
+  padding: 0;
+  border-top: 3px double var(--line);
 }
 
 .player-settings summary {
-  cursor: pointer;
+  display: flex;
+  align-items: center;
+  min-height: 52px;
+  font: 700 0.8rem/1.3 var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: var(--muted);
+  cursor: pointer;
 }
 
 .check {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin: 12px 0;
-  font-size: 1rem;
+  gap: 12px;
+  margin: 8px 0;
+  min-height: 44px;
+  font: 400 1.05rem/1.3 var(--sans);
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--fg);
+}
+
+.check input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  accent-color: var(--accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .progress span {
     transition: none;
   }
-}
-
-.stage.hidden-text {
-  font-size: 1.2rem;
-  font-style: italic;
-  color: var(--muted);
-  border-left-color: var(--line);
 }
 
 .peek {
@@ -519,26 +821,45 @@ textarea[aria-label] {
   min-height: 12rem;
 }
 
+.reps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 2px 0 6px;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.dots i {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+}
+
+.dots i.on {
+  background: var(--gold);
+}
+
 .turn-badge {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 4px 12px;
-  margin: 8px 0;
-  padding: 8px 12px;
-  background: var(--card);
-  border: 1px solid var(--accent);
-  border-radius: 10px;
+  gap: 0 14px;
+  margin: 6px 0 0;
 }
 
 .turn-badge strong {
-  font-size: 1.15rem;
+  font: italic 500 1.6rem/1.2 var(--serif);
   color: var(--accent);
 }
 
 .turn-badge span {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .names {
@@ -546,6 +867,9 @@ textarea[aria-label] {
 }
 
 .names summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   cursor: pointer;
   color: var(--muted);
 }
@@ -554,33 +878,26 @@ textarea[aria-label] {
   display: block;
   width: 100%;
   margin: 8px 0 0;
-  padding: 10px;
-  font: inherit;
-  color: var(--fg);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 10px;
 }
 
 .journal-link {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 24px;
-  margin: 20px 0 0;
+  gap: 0 28px;
+  margin: 18px 0 0;
 }
 
 .journal-link a {
   color: var(--accent);
-  font-size: 1.05rem;
+  font: 500 1.2rem/1 var(--serif);
+  text-underline-offset: 4px;
 }
 
 .entries {
   list-style: none;
-  margin: 0 0 20px;
+  margin: 8px 0 24px;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  border-bottom: 1px solid var(--line);
 }
 
 .entry {
@@ -589,20 +906,23 @@ textarea[aria-label] {
   align-items: flex-start;
   gap: 2px;
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 0;
   text-align: left;
-  background: var(--card);
+  background: transparent;
   color: var(--fg);
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
 }
 
 .entry-title {
-  font-weight: 600;
+  font: 500 1.4rem/1.2 var(--serif);
 }
 
 .entry-sub {
-  font-size: 0.85rem;
+  font: 700 0.76rem/1.4 var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--muted);
 }
 
@@ -612,33 +932,32 @@ textarea[aria-label] {
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  margin-top: 4px;
+  font: italic 400 1.1rem/1.4 var(--serif);
   color: var(--muted);
 }
 
 .entry-text {
-  margin: 12px 0 16px;
-  font-size: 1.15rem;
-  line-height: 1.55;
+  margin: 16px 0 18px;
+  font: 400 1.3rem/1.55 var(--serif);
   white-space: pre-wrap;
 }
 
-.export {
-  padding: 14px 16px;
+.export,
+.voice-settings {
+  padding-top: 14px;
+  border-top: 3px double var(--line);
 }
 
-.export h2 {
+.export h2,
+.voice-settings h2 {
   margin: 0 0 4px;
 }
 
 button.danger {
   background: var(--bad);
+  border-color: var(--bad);
   color: #ffffff;
-}
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 /* Accesibilidad */
@@ -677,17 +996,10 @@ footer a {
   min-height: 44px;
 }
 
-.stage.size-large {
-  font-size: 2rem;
-}
-
-.stage.size-xlarge {
-  font-size: 2.5rem;
-}
-
-.stage.hidden-text.size-large,
-.stage.hidden-text.size-xlarge {
-  font-size: 1.5rem;
+.actions > button:not(.secondary):not(.danger) {
+  flex: 1 1 12rem;
+  min-height: 52px;
+  font-size: 1.25rem;
 }
 
 /* Avisos de la app (versión nueva, instalar): flotan abajo para no empujar el contenido al aparecer. */
@@ -702,8 +1014,17 @@ footer a {
   gap: 8px;
   max-width: 760px;
   margin: 0 auto;
-  padding: 0 16px max(12px, env(safe-area-inset-bottom));
+  padding: 0 20px max(12px, env(safe-area-inset-bottom));
   pointer-events: none;
+}
+
+/*
+ * Sin avisos no ocupa nada, y se muestra uno solo (el último en llegar; el otro espera a que se cierre):
+ * si un aviso nuevo se apilara bajo uno ya visible, lo empujaría hacia arriba y contaría como desplazamiento.
+ */
+.toasts:empty,
+.toasts > :not(:last-child) {
+  display: none;
 }
 
 .toasts .banner {
@@ -714,15 +1035,6 @@ footer a {
 
 .toasts .banner p {
   margin: 4px 0 10px;
-}
-
-input[type='text'] {
-  padding: 10px;
-  font: inherit;
-  color: var(--fg);
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 10px;
 }
 
 .field input[type='text'] {

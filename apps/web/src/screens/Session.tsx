@@ -129,7 +129,14 @@ function Player({ gospel, sentences, steps }: PlayerProps) {
       </div>
       <p className="eyebrow">{stepHeading(t, step, sentences.length)}</p>
       {step.repetitions > 1 && (
-        <p className="meta">{t('session.repetition', { current: step.repetition, total: step.repetitions })}</p>
+        <p className="meta reps">
+          <span className="dots" aria-hidden="true">
+            {Array.from({ length: step.repetitions }, (_, index) => (
+              <i key={index} className={index < step.repetition ? 'on' : undefined} />
+            ))}
+          </span>
+          {t('session.repetition', { current: step.repetition, total: step.repetitions })}
+        </p>
       )}
       {app.people > 1 && (
         <p className="turn-badge">
