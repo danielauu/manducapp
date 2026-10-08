@@ -24,13 +24,13 @@ describe('stepSeconds y estimateSessionSeconds', () => {
     expect(reflection && stepSeconds(reflection)).toBe(0);
   });
 
-  it('crece con el número de personas', () => {
+  it('hasta 3 personas dura lo mismo que solo, y desde 4 crece con cada persona', () => {
     const text = [words(12), words(15), words(9)];
-    const solo = estimateSessionSeconds(buildSession(text, { people: 1 }));
-    const trio = estimateSessionSeconds(buildSession(text, { people: 3 }));
-    const five = estimateSessionSeconds(buildSession(text, { people: 5 }));
-    expect(trio).toBeGreaterThan(solo);
-    expect(five).toBeGreaterThan(trio);
+    const minutes = (people: number) => estimateSessionSeconds(buildSession(text, { people }));
+    expect(minutes(2)).toBeCloseTo(minutes(1), 5);
+    expect(minutes(3)).toBeCloseTo(minutes(1), 5);
+    expect(minutes(4)).toBeGreaterThan(minutes(3));
+    expect(minutes(5)).toBeGreaterThan(minutes(4));
   });
 
   it('la voz en cada repetición alarga la sesión', () => {

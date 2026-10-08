@@ -57,7 +57,8 @@ export const es = {
   'pace.fast': 'Más rápido',
   'group.names': 'Nombres (opcional)',
   'group.person': 'Persona {number}',
-  'group.note': 'En grupo cada oración se repite 3 veces por persona, así que el tiempo crece con cada integrante.',
+  'group.note':
+    'En grupo, cada persona dice cada oración una vez (siempre al menos 3 veces en total) y las uniones se dicen una sola vez, turnándose. Hasta 3 personas el tiempo es el mismo; solo crece desde 4.',
   'group.everyone': 'Todo el grupo',
   'group.turn': 'Turno de {name}',
   'group.next': 'Sigue: {name}',

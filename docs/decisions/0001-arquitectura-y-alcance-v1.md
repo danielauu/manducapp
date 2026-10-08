@@ -14,7 +14,7 @@ Manducapp es un proyecto sin fines de lucro. El criterio que ordena todas las de
 3. **Audio:** TTS del dispositivo. Sin audio pregrabado ni IA en vivo.
 4. **Plataforma:** PWA en GitHub Pages primero. Luego la misma app envuelta con Capacitor para Play Store y App Store.
 5. **Almacenamiento:** no se empaqueta ninguna Biblia. Solo caché local de los días consultados.
-6. **Grupos:** modo presencial en un solo dispositivo (hasta 5 personas), con repeticiones 3×n. Sin sincronización entre dispositivos.
+6. **Grupos:** modo presencial en un solo dispositivo (hasta 5 personas), con repeticiones 3×n (modificado después por el [ADR-0003](0003-repeticiones-en-grupo.md)). Sin sincronización entre dispositivos.
 7. **Meditaciones:** guardado local y exportación. Sin cuentas.
 8. **Segmentación y recorte:** algoritmo determinista sin IA, con estimador de tiempo y presupuesto configurable (30 min por defecto).
 9. **Repositorio:** monorepo público `danielauu/manducapp` con npm workspaces. Los textos bíblicos nunca se versionan.

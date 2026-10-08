@@ -89,21 +89,38 @@ describe('buildSession: otras estrategias', () => {
 });
 
 describe('buildSession: grupo', () => {
-  it('repite cada oración 3 × n veces y cada persona la dice 3 veces', () => {
+  it('con 3 personas la oración se repite 3 veces: una pasada, cada persona una vez', () => {
     const steps = buildSession(sentences(2), { people: 3 });
     const first = steps.filter((step) => step.kind === 'learn' && step.from === 0);
-    expect(first).toHaveLength(9);
-    expect(first.every((step) => step.repetitions === 9)).toBe(true);
-    for (const person of [0, 1, 2]) {
-      expect(first.filter((step) => step.speaker === person)).toHaveLength(3);
+    expect(first).toHaveLength(3);
+    expect(first.every((step) => step.repetitions === 3)).toBe(true);
+    expect(first.map((step) => step.speaker)).toEqual([0, 1, 2]);
+  });
+
+  it('de a dos es lo mismo que solo: 3 repeticiones, pasando entre las dos personas', () => {
+    const solo = buildSession(sentences(2), { people: 1 }).filter((step) => step.kind === 'learn');
+    const pair = buildSession(sentences(2), { people: 2 }).filter((step) => step.kind === 'learn');
+    expect(pair).toHaveLength(solo.length);
+    expect(pair.filter((step) => step.from === 0).map((step) => step.speaker)).toEqual([0, 1, 0]);
+    expect(pair.filter((step) => step.from === 1).map((step) => step.speaker)).toEqual([1, 0, 1]);
+  });
+
+  it('el número de repeticiones es máx(3, personas): entre 3 y 5', () => {
+    const repetitions = (people: number) =>
+      buildSession(['una oración'], { people }).filter((step) => step.kind === 'learn').length;
+    expect([1, 2, 3, 4, 5].map(repetitions)).toEqual([3, 3, 3, 4, 5]);
+  });
+
+  it('con 4 y 5 personas cada una dice la oración al menos una vez por oración', () => {
+    for (const people of [4, 5]) {
+      const learn = buildSession(['una oración'], { people }).filter((step) => step.kind === 'learn');
+      expect(new Set(learn.map((step) => step.speaker)).size).toBe(people);
     }
   });
 
-  it('las repeticiones escalan con el número de personas hasta 5', () => {
-    for (const people of [1, 2, 3, 4, 5]) {
-      const learn = buildSession(['una oración'], { people }).filter((step) => step.kind === 'learn');
-      expect(learn).toHaveLength(3 * people);
-    }
+  it('se puede subir el mínimo de repeticiones', () => {
+    const learn = buildSession(['una oración'], { people: 2, minRepetitions: 5 }).filter((step) => step.kind === 'learn');
+    expect(learn).toHaveLength(5);
   });
 
   it('cada oración la empieza una persona distinta, rotando', () => {
@@ -114,11 +131,25 @@ describe('buildSession: grupo', () => {
     expect(starters).toEqual([0, 1, 2, 0]);
   });
 
-  it('en las uniones habla cada persona una vez', () => {
-    const steps = buildSession(sentences(3), { people: 3 });
-    const firstLink = steps.filter((step) => step.kind === 'link' && step.from === 0);
-    expect(firstLink).toHaveLength(3);
-    expect(new Set(firstLink.map((step) => step.speaker))).toEqual(new Set([0, 1, 2]));
+  it('cada unión se dice una sola vez y quien la dice va rotando', () => {
+    const steps = buildSession(sentences(4), { people: 3 });
+    const links = steps.filter((step) => step.kind === 'link');
+    expect(links.map((step) => [step.from, step.to])).toEqual([[0, 1], [1, 2], [2, 3]]);
+    expect(links.every((step) => step.repetitions === 1)).toBe(true);
+    expect(links.map((step) => step.speaker)).toEqual([0, 1, 2]);
+  });
+
+  it('de a dos y de a tres hay los mismos pasos que solo, salvo quién habla', () => {
+    const shape = (people: number) =>
+      buildSession(sentences(6), { people }).map((step) => `${step.kind}:${step.from}-${step.to}`);
+    expect(shape(2)).toEqual(shape(1));
+    expect(shape(3)).toEqual(shape(1));
+  });
+
+  it('solo desde 4 personas hay más pasos que solo, y son las repeticiones de cada oración', () => {
+    const count = (people: number) => buildSession(sentences(6), { people }).length;
+    expect(count(4)).toBe(count(1) + 6);
+    expect(count(5)).toBe(count(1) + 12);
   });
 
   it('el recitado final lo dice el grupo junto', () => {
@@ -131,7 +162,7 @@ describe('buildSession: validación', () => {
     expect(() => buildSession(sentences(2), { people: 6 })).toThrow(RangeError);
     expect(() => buildSession(sentences(2), { people: 0 })).toThrow(RangeError);
     expect(() => buildSession(sentences(2), { people: 2.5 })).toThrow(RangeError);
-    expect(() => buildSession(sentences(2), { repsPerPerson: 0 })).toThrow(RangeError);
+    expect(() => buildSession(sentences(2), { minRepetitions: 0 })).toThrow(RangeError);
     expect(() => buildSession(sentences(2), { blockSize: 1 })).toThrow(RangeError);
   });
 });
